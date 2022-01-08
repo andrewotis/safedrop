@@ -1,0 +1,9 @@
+hey guys, thanks for checking out this tool. 
+
+there are already some really great applications out there for encrypting your files and keeping track of your passwords. 
+
+i created this for many reasons including wanting some basic exposure to coding with openpgp and 
+
+stay safe and secure
+
+-some dude

@@ -1,0 +1,43 @@
+/*.navbar > .container {
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+}
+  
+.navbar {
+    margin: 0;
+    padding: 0;
+}*/
+
+.hr {
+    min-width: 100%;
+    border-top: 1px solid whitesmoke;
+}
+
+.text-right {
+    text-align: right;
+}
+.text-left {
+    text-align: left;
+}
+
+.fs-7 {
+    font-size: .8em;
+}
+
+.fs-8 {
+    font-size: .7em;
+}
+
+.color1 { color: /* color for lock vector */ }
+.color2 { color: #436ea3; }
+.color3 { color: #7fa2cc; }
+.color4 { color: #e6f3ff; }
+.color5 { color: #c5d7ed; }
+
+/* 
+#7fa2cc
+#436ea3
+#e6f3ff
+#c5d7ed
+*/
