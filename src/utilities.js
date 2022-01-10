@@ -1,36 +1,66 @@
 import * as openpgp from "openpgp";
-// import * as fs from 'fs';
+import { map } from './passwordGeneratorMap';
+import * as dispatchers from './state/dispatchers';
 
-export const generateKeypair = async (keyType, userName, userEmail, passphrase ) => {
-    const { privateKey, publicKey } = await openpgp.generateKey({
-        type: keyType,
-        rsaBits: 4096, 
-        userIDs: [{ name: userName, email: userEmail }],
-        passphrase: passphrase,
-    });
-    return { privateKey, publicKey }
-};
+const fs = require('fs');
 
-export const encrypt = async (publicKey, plainData) => {
-    const encrypted = await openpgp.encrypt({
-      message: openpgp.Message.fromText(plainData),
-      publicKeys: (await openpgp.Key.readArmored(publicKey)).keys,
-    });
-    console.log(encrypted.data);
-    return encrypted.data;
+export const addPassword = (database, passphrase, setDatabase, newPassword) => {
+    // unlock the private key
+    // decrypt the database
+    // add to the datbase
+    // encrypt the database
+    // save the file
 }
 
-export const decrypt = async (privateKey, encryptedData)
-    const decrypt = await openpgp.decrypt({
-        encryptedData,
-        //verificationKeys: publicKey, // optional
-        decryptionKeys: privateKey
-    });
-    for await (const chunk of decrypted.data) {
-        chunks.push(chunk);
+
+export const loadFile = (path = '%HOMEPATH%\\db.safe') => {
+    try {
+        const data = fs.readFileSync(path, 'utf8');
+        dispatchers.setDbFile(data);
+      } catch (err) {
+        dispatchers.logErrorMessage(err)
+      }
+}
+
+export const generateRandomPassword = passwordLength => {
+    let results = '';
+    for(let n=0;n<passwordLength;n++) {
+        results += map[getRandomNumber(map.length)].toString();
     }
-    const plaintext = chunks.join('');
-    console.log(plaintext); // 'Hello, World!'
+    return results;
+}
+
+export const getRandomNumber = max => {
+    return Math.floor(Math.random() * max);
+}
+
+export const generateKeypair = async (passphrase) => {
+    const { privateKey, publicKey, revokationCertificate } = await openpgp.generateKey({
+        userIDs: { name: 'Jon Smith' },
+        passphrase: passphrase,
+    });
+    return { privateKey, publicKey, revokationCertificate }
+};
+
+// return true or false based on passphrase validity
+export const verifyPassphrase = async (privateKeyArmored, passphrase) => {
+    console.log('made it to verifyPassphrase')
+    let privateKey = false;
+        
+    try {
+        privateKey = await openpgp.decryptKey({
+            privateKey: await openpgp.readPrivateKey({ armoredKey: privateKeyArmored }),
+            passphrase
+        });
+    } catch (error) {
+        //logError(error.message)
+    }
+    
+    return privateKey === false ? false : privateKey.isDecrypted();
+}
+
+export const decrypt = async (privateKey, encryptedData) => {
+    
 }
 
 

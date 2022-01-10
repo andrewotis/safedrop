@@ -13,6 +13,7 @@
         const [passphrase, setPassphrase] = useState(''); //useState('');
         const [publicKey, setPublicKey] = useState(null);
         const [privateKey, setPrivateKey] = useState(null);
+        const [revokationCertificate, setRevokationCertificate] = useState(null);
 
         return (
             <>
@@ -39,6 +40,7 @@
                             <StepThree
                                 setPublicKey={key => setPublicKey(key)}
                                 setPrivateKey={key => setPrivateKey(key)}
+                                setRevokationCertificate={cert => setRevokationCertificate(cert)}
                                 passphrase={passphrase}
                                 next={() => setStep(4)} 
                             /> 
@@ -62,6 +64,7 @@
                                 next={() => setPage('Authenticate')} 
                                 publicKey={publicKey}
                                 privateKey={privateKey}
+                                revokationCertificate={revokationCertificate}
                             />
                     }
                 </Container>

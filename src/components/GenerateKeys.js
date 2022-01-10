@@ -8,7 +8,6 @@
         const [showModal, setShowModal] = useState(false);
         const [keypair, setKeypair] = useState({
             userName: '',
-            userEmail: '',
             keypairName: '',
             keypairType: 'rsa',
             passphrase: '',
@@ -21,7 +20,7 @@
         const generateKeys = async (e) => {
             e.preventDefault();
             setLoading(true);
-            const { privateKey, publicKey } = await generateKeypair(keypair.keyType, keypair.userName, keypair.userEmail, keypair.passphrase);
+            const { privateKey, publicKey } = await generateKeypair(keypair.keyType, keypair.userName, keypair.passphrase);
             setKeypair({
                 ...keypair,
                 keys: {

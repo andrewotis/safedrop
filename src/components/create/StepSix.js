@@ -3,19 +3,25 @@ import { Container, Row, Col, Button, Form, ListGroup } from "react-bootstrap";
 import { specific } from 'react-files-hooks';
 
 
-export default function StepSix({ next, privateKey, publicKey }) {
+export default function StepSix({ next, privateKey, publicKey, revokationCertificate }) {
     const [downloadUrl, setDownloadUrl] = useState('');
     const [downloaded, setDownloaded] = useState(false);
     const { download } = specific.useJSONDownloader();
   
     const dlData = {
-        passphraseTester: 'valid',
         keys: {
             public: publicKey,
-            private: privateKey
+            private: privateKey,
+            revokationCert: revokationCertificate
         },
-        notes: [],
         passwords: [],
+        notes: [],
+        files: [],
+        calendar: [],
+        keys: [],
+        settings: {
+            idleTimeout: 3
+        },
     }
 
     const handleDownload = _ => {

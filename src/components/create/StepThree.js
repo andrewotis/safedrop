@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import { Container, Row, Col, Button, Form, Spinner } from "react-bootstrap";
 import { generateKeypair } from './../../utilities';
 
-export default function StepThree({setPublicKey, setPrivateKey, passphrase, next}) {
+export default function StepThree({setPublicKey, setPrivateKey, setRevokationCertificate, passphrase, next}) {
     const [loading, setLoading] = useState(false);
     const [allowNext, setAllowNext] = useState(false);
     
     const generateKeys = async () => {
         setLoading(true);
-        const { privateKey, publicKey } = await generateKeypair('rsa', 'encryptkeeper', 'encryptkeeper@thecrypt.com', passphrase);
+        const { privateKey, publicKey, revokationCertificate } = await generateKeypair(passphrase);
         setPublicKey(publicKey);
         setPrivateKey(privateKey);
         setLoading(false);
