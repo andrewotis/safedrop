@@ -9,7 +9,7 @@ const initialState = {
     loading: false,
     activePasswordCopy: false,
     authenticated: false,
-    currentPage: 'AuthOrCreate',
+    currentPage: 'Authenticate',
     log: [],
     createStep: null,
     unsavedDropFile: false,

@@ -33,18 +33,31 @@ export default function Menu() {
                         </div>
                     </Navbar.Brand>
                     <Navbar.Collapse id="basic-navbar-nav">
-                        <Nav fill justify className="me-auto w-100">
+                        <Nav fill={state.authenticated} justify={state.authenticated} className="me-auto w-100">
+                            {
+                                !state.authenticated &&
+                                    <Nav.Link
+                                        onClick={
+                                            () => dispatchers.setCurrentPage('PasswordGenerator')
+                                        }
+                                        className="cursor-pointer"
+                                    >
+                                        Password Generator
+                                    </Nav.Link>
+                            }
                             {
                                 state.authenticated &&
                                     <>
                                         <NavDropdown title="Passwords" id="nav-dropdown-keys">
-                                            <NavDropdown.Item 
-                                                onClick={() => dispatchers.setCurrentPage('Passwords')} 
+                                            <NavDropdown.Item
+                                                onClick={() => dispatchers.setCurrentPage('Passwords')}
                                                 className="cursor-pointer"
                                             >
                                                 View/Manage
                                             </NavDropdown.Item>
-                                            <NavDropdown.Item disabled href="#">
+                                            <NavDropdown.Item
+                                                onClick={() => dispatchers.setCurrentPage('PasswordGenerator')}
+                                            >
                                                 Generator
                                             </NavDropdown.Item>
                                             <NavDropdown.Item disabled href="#">

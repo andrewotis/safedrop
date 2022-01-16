@@ -7,6 +7,7 @@ import Create from '../create-dropfile/Create';
 import Authenticate from './Authenticate';
 import Passwords from '../passwords/Passwords';
 import Home from './Home';
+import PasswordGenerator from "../passwords/PasswordGenerator";
 import * as dispatchers from './../state/dispatchers';
 
 export default function Content() {
@@ -18,6 +19,7 @@ export default function Content() {
         'Authenticate' : <Authenticate />,
         'Passwords': <Passwords />,
         'Home': <Home />,
+        'PasswordGenerator': <PasswordGenerator />,
         'RevokeKey' : null,
         'ImportKey' : null,
         'ExportKey' : null,

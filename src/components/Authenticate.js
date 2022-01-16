@@ -3,7 +3,8 @@ import { Container, Row, Col, Button, Form } from "react-bootstrap";
 import { useUploader } from "react-files-hooks";
 import { useSelector } from "react-redux";
 import * as dispatchers from './../state/dispatchers';
-import * as utilities from './../utilities'
+import * as utilities from './../utilities';
+import { Icon } from '@iconify/react';
 import Loading from './Loading';
 
 export default function Authenticate() {
@@ -49,7 +50,12 @@ export default function Authenticate() {
             <Loading />
             <Row>
                 <Col className="w-100 text-center fs-4">
-                    Load encrypted database file
+                    Load safe
+                    <Icon
+                        icon="flat-ui:lock"
+                        width="30"
+                        style={{marginLeft: '20px', marginTop: '-15px'}}
+                    />
                 </Col>
             </Row>
             <Row className="mt-4">
@@ -70,7 +76,6 @@ export default function Authenticate() {
                             />
                     }
                     <Form.Group className="mb-3 mt-4" variant="dark">
-                        <Form.Label>Passphrase</Form.Label>
                         <Form.Control
                             type="password"
                             placeholder="Enter passpharse"
@@ -78,7 +83,7 @@ export default function Authenticate() {
                             onChange={e => setPassphrase(e.target.value)}
                         />
                     </Form.Group>
-                    <Row className="mt-4">
+                    <Row className="mt-4 text-center">
                         <Col>
                             <Button
                                 onClick={() => checkPassphrase()}
@@ -86,7 +91,18 @@ export default function Authenticate() {
                                 className="w-100"
                                 disabled={ passphrase === "" || disableAllInput }
                             >
-                                Verify passphrase and open database
+                                Open
+                            </Button>
+                            or
+                            <Button
+                                onClick={() => {
+                                    dispatchers.setCurrentPage('Create');
+                                    dispatchers.setCreateStep(1);
+                                }}
+                                variant="outline-light"
+                                className="w-100 cursor-pointer"
+                            >
+                                Create new
                             </Button>
                         </Col>
                     </Row>

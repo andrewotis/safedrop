@@ -1,10 +1,7 @@
 import * as openpgp from "openpgp";
-import { map } from './passwords/passwordGeneratorMap';
 import * as dispatchers from './state/dispatchers';
 import { houseKeys } from './houseKeys';
 import store from './state/store';
-
-
 
 export const addPassword = async (dropFile, passwordObject) => {
     console.debug('utilities.addPassword fired');
@@ -47,7 +44,12 @@ export const settingsHelper = {
     get: () => {
         console.debug('utilities.settingsHelper.get fired');
         const settings = sessionStorage.getItem('settings');
-        return JSON.parse(settings);
+        if(settings !== undefined) {
+            return JSON.parse(settings);
+        } else {
+            loadSettings(store.getState().dropFile);
+            return JSON.parse(sessionStorage.getItem('settings'));
+        }
     },
     set: (settings) => {
         console.debug('utilities.settingsHelper.set fired');
@@ -169,8 +171,9 @@ export const decryptMessage = async (message, privateKey) => {
 export const generateRandomPassword = passwordLength => {
     console.debug('utilities.generateRandomPassword fired');
     let results = '';
+    const map = settingsHelper.get().passwordGenerator.characterMap;
     for(let n=0;n<passwordLength;n++) {
-        results += map[getRandomNumber(map.length)].toString();
+        results += map[getRandomNumber(map.length)].char.toString();
     }
     return results;
 }
