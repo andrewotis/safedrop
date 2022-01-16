@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Button, Form, Spinner } from "react-bootstrap";
 import ReactAudioPlayer from 'react-audio-player';
+import * as dispatchers from '../state/dispatchers';
 
-export default function StepFour({next}) {
+export default function StepFour() {
     const [allowNext, setAllowNext] = useState(false);
 
     return (
@@ -29,7 +30,7 @@ export default function StepFour({next}) {
                         variant="light"
                         size="sm"
                         disabled={!allowNext}
-                        onClick={() => next()}
+                        onClick={() => dispatchers.setCreateStep(5)}
                     >
                         {allowNext ? 'Continue' : "Click the play button."}
                     </Button>

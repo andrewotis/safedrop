@@ -3,6 +3,7 @@ import { createStore, applyMiddleware } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import authenticateSaga from './authenticateSaga';
+import generateKeypairSaga from "./generateKeypairSaga";
 
 const sagaMiddleware = createSagaMiddleware();
 const composedEnhancer = composeWithDevTools(
@@ -11,5 +12,6 @@ const composedEnhancer = composeWithDevTools(
 
 const store = createStore(systemReducer, composedEnhancer)
 sagaMiddleware.run(authenticateSaga);
+sagaMiddleware.run(generateKeypairSaga);
 
 export default store;

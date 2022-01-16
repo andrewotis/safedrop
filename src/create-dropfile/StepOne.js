@@ -1,9 +1,16 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Button, Form } from "react-bootstrap";
-import { triedToPaste } from './../../utilities';
+import {encryptAndStoreInSessionStorage, triedToPaste} from '../utilities';
+import * as dispatchers from '../state/dispatchers';
+import * as utilities from '../utilities';
 
-export default function StepOne({passphrase, setPassphrase, next}) {
-    
+export default function StepOne() {
+    const [passphrase, setPassphrase] = useState('');
+    const handleNext = _ => {
+        utilities.encryptAndStoreInSessionStorage('asephrassp', passphrase);
+        dispatchers.setCreateStep(2)
+    }
+
     return (
         <Container>
             <Row>
@@ -52,7 +59,7 @@ export default function StepOne({passphrase, setPassphrase, next}) {
                         variant="light"
                         size="sm"
                         disabled={passphrase === ''}
-                        onClick={() => next()}
+                        onClick={() => handleNext()}
                     >
                         {passphrase === '' ? 'Type a passphrase!' : "Continue"}
                     </Button>

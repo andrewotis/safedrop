@@ -1,10 +1,17 @@
-import React, { useState } from "react";
+import React from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
-import * as openpgp from "openpgp";
+import * as dispatchers from './../state/dispatchers';
+import Loading from "./Loading";
 
-export default function AuthOrCreate({ setPage }) {
+export default function AuthOrCreate() {
+    const handleNo = () => {
+        dispatchers.setCurrentPage('Create');
+        dispatchers.setCreateStep(1);
+    }
+
     return (
-      <> 
+      <>
+          <Loading />
         <Container fluid className="w-100">
             <Row>
                 <Col className="w-100 text-center fs-4">
@@ -17,7 +24,7 @@ export default function AuthOrCreate({ setPage }) {
                         size="sm" 
                         variant="light" 
                         className="w-50"
-                        onClick={() => setPage('Authenticate')}
+                        onClick={() => dispatchers.setCurrentPage('Authenticate')}
                     >
                         Yes
                     </Button>
@@ -27,7 +34,7 @@ export default function AuthOrCreate({ setPage }) {
                         size="sm" 
                         variant="secondary" 
                         className="w-50"
-                        onClick={() => setPage('Create')}
+                        onClick={() => handleNo()}
                     >
                             No
                     </Button>

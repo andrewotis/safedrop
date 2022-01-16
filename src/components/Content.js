@@ -1,33 +1,46 @@
 import React from 'react';
-import { Container } from 'react-bootstrap';
+import { useSelector } from "react-redux";
+import { Container, Alert } from 'react-bootstrap';
 import GenerateKeys from './GenerateKeys';
 import AuthOrCreate from './AuthOrCreate';
-import Create from './create/Create';
+import Create from '../create-dropfile/Create';
 import Authenticate from './Authenticate';
-import Passwords from './Passwords';
+import Passwords from '../passwords/Passwords';
 import Home from './Home';
+import * as dispatchers from './../state/dispatchers';
 
-export default function Content({ page, setPage, authenticate, database, setDatabase, passphrase, setPassphrase }) {
+export default function Content() {
+    const state = useSelector(state => state);
     const componentMap = {
         'GenerateKeys' : <GenerateKeys />,
-        'AuthOrCreate' : <AuthOrCreate setPage={page => setPage(page)} />,
-        'Create' : <Create setPage={page => setPage(page)}/>,
-        'Authenticate' : <Authenticate database={database} setDatabase={db => setDatabase(db)} passphrase={passphrase} setPassphrase={p => setPassphrase(p)} authenticate={() => authenticate()} setPage={page => setPage(page)}/>,
-        'Passwords': <Passwords passphrase={passphrase} database={database} setDatabase={db => setDatabase(db)} setPage={page => setPage(page)}/>,
-        'Home': <Home setPage={page => setPage(page)}/>,
+        'AuthOrCreate' : <AuthOrCreate />,
+        'Create' : <Create />,
+        'Authenticate' : <Authenticate />,
+        'Passwords': <Passwords />,
+        'Home': <Home />,
         'RevokeKey' : null,
         'ImportKey' : null,
         'ExportKey' : null,
     }
 
+    const logTypeMap = {
+        'success': 'success',
+        'error': 'danger',
+        'info': 'info',
+        'warning': 'warning',
+    }
+
     const displayContent = () => {
-        return componentMap[page];
+        return componentMap[state.currentPage];
     }
 
     return (
         <>
-            <Container className="mt-4 text-light w-75 m-auto">
-                { page !== null && displayContent() }
+            <Container fluid className="dark-safe-bg">
+                <Container className="pt-4 text-light w-75 m-auto darkbg h-100">
+                    { state.log.map((alert, i) => <Alert key={i} variant={logTypeMap[alert.type]} className="m-auto w-75" onClose={() => dispatchers.dismissLogMessage(alert)} dismissible>{alert.message}</Alert>) }
+                    { displayContent() }
+                </Container>
             </Container>
         </>
     );

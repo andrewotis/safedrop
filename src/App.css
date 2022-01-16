@@ -9,8 +9,43 @@
     padding: 0;
 }*/
 
+.dark-safe-bg {
+    /*background-image: url(".\\..\\public\\safe3.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 400px;*/
+}
+
 .cursor-pointer {
     cursor: pointer;
+}
+
+.darkbg {
+    background: rgba(0, 0, 0, 0.5);
+    /*padding-top:100px;*/
+    padding-bottom:100px;
+    overflow: hidden;
+}
+
+.spinner-border {
+    animation: 1.75s cubic-bezier(0.6,-0.62, 0.21, 1.45) infinite spinner-border !important;
+}
+
+.pulse-animation {
+    animation-name: pulse;
+    animation-duration:1s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+@keyframes pulse {
+    from {
+        transform: scale(.75)
+    }
+
+    to {
+        transform:scale(1.0)
+    }
 }
 
 .hr {

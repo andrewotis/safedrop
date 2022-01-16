@@ -1,10 +1,16 @@
 import React, { useState, useRef } from "react";
 import { Container, Tooltip, OverlayTrigger, InputGroup, FormControl, Row, Col, Button, Form, Spinner, Alert, Modal } from "react-bootstrap";
 import { Icon } from '@iconify/react';
-import { generateRandomPassword, addPassword } from './../utilities';
+import { useSelector } from "react-redux";
+import * as utilities from '../utilities';
+import * as dispatchers from '../state/dispatchers';
+import Loading from '../components/Loading';
 
-export default function AddPasswordModal({ show, setShow, database, setDatabase, passphrase }) {
+export default function AddPasswordModal({ show, setShow }) {
+    const state = useSelector(state => state);
+
     const [title, setTitle] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [confirm, setConfirm] = useState('');
     const [metas, setMetas] = useState([]);
@@ -14,38 +20,67 @@ export default function AddPasswordModal({ show, setShow, database, setDatabase,
     
     const [showTooltip, setShowTooltip] = useState(null);
     const target = useRef(null);
+
+    const clearInputs = _ => {
+        setTitle('');
+        setUsername('');
+        setPassword('');
+        setConfirm('');
+        setMetas([]);
+        setMetaKey('');
+        setMetaValue('');
+    }
     
     const handleAddMetaButton = _ => {
         if(metaKey === '' || metaValue === '') {
-            alert('please add both a key and value first!');
+            alert('please add both a key and value first!');   
             return false;
         } else {
             setMetas([...metas, { key: metaKey, val: metaValue }]);
             setMetaKey('');
             setMetaValue('');
         }
-        return true;
     }
 
     const handleGeneratePassword = _ => {
-        const pass = generateRandomPassword(12);
+        const pass = utilities.generateRandomPassword(12);
         setPassword(pass);
         setConfirm(pass);
         setPasswordInputType('text');
         setTimeout(() => setPasswordInputType('password'), 300);
     }
 
-    const handleSavePassword = _ => {
-       const obj = {
-           title: title,
-           password: password,
-           metas: metas
-       }
-       addPassword(database, passphrase, setDatabase, obj);
+    const handleSavePassword = async () => {
+        if(metaKey !== '' && metaValue !== '')
+            handleAddMetaButton();
+
+        if(password !== confirm) {
+            dispatchers.logMessage({type: 'error', message: 'Passwords do not match!'});
+            return false;
+        }
+        console.debug('saving password. calling utilities.addPassword with');
+        console.debug('state.dropFile', state.dropFile);
+        console.debug('passwordObject', {
+            title: title,
+            username: username,
+            password: password,
+            metas: metas
+        });
+
+        await utilities.addPassword(state.dropFile, {
+            title: title,
+            username: username,
+            password: password,
+            metas: metas
+        });
+
+        clearInputs();
+        setShow(false);
     }
 
     return (
         <>
+            <Loading />
             <Modal
                 size="md"
                 centered
@@ -74,6 +109,19 @@ export default function AddPasswordModal({ show, setShow, database, setDatabase,
                         <FormControl
                             placeholder="Enter title"
                             onChange={e => setTitle(e.target.value)}
+                            value={title}
+                        />
+                    </InputGroup>
+                    <InputGroup className="mb-3" size="sm">
+                        <InputGroup.Text
+                            style={{width:'90px'}}
+                        >
+                            Username
+                        </InputGroup.Text>
+                        <FormControl
+                            value={username}
+                            placeholder="Enter username"
+                            onChange={e => setUsername(e.target.value)}
                         />
                     </InputGroup>
                     <InputGroup className="mb-3" size="sm">
@@ -121,11 +169,11 @@ export default function AddPasswordModal({ show, setShow, database, setDatabase,
                                         </InputGroup.Text>
                                         <FormControl 
                                             placeholder="Key"
-                                            value={meta.key}
+                                            defaultValue={meta.key}
                                         />
                                         <FormControl 
                                             placeholder="Value"
-                                            value={meta.val}
+                                            defaultValue={meta.val}
                                         />
                                     </InputGroup>
                                 </div>

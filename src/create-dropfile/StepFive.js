@@ -1,8 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Button, Form, ListGroup } from "react-bootstrap";
-import { triedToPaste } from './../../utilities';
+import { triedToPaste } from '../utilities';
+import * as dispatchers from '../state/dispatchers';
+import { useSelector } from "react-redux";
+import * as utilities from '../utilities';
 
-export default function StepFive({next, passphrase}) {
+export default function StepFive() {
+    const [passphrase, setPassphrase] = useState(null);
+
+    useEffect(async () => {
+        const decrypted = await utilities.retrieveAndDecryptFromSessionStorage('asephrassp');
+        setPassphrase(decrypted);
+    },[]);
+
     const [confirmed, setConfirmed] = useState(0);
     const [inputDisabled, setInputDisabled] = useState(false);
 
@@ -106,7 +116,7 @@ export default function StepFive({next, passphrase}) {
                         variant="light"
                         size="sm"
                         disabled={confirmed < 5}
-                        onClick={() => next()}
+                        onClick={() => dispatchers.setCreateStep(6)}
                     >
                         { confirmed < 5 ? 'Type passphrases above' : 'Continue' }
                     </Button>

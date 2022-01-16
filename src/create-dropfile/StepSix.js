@@ -1,33 +1,37 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Button, Form, ListGroup } from "react-bootstrap";
 import { specific } from 'react-files-hooks';
+import * as utilities from '../utilities';
+import * as dispatchers from '../state/dispatchers';
+import { useSelector } from "react-redux";
+import { initialStateDropfileData } from "../state/initialStateDropfileData";
 
-
-export default function StepSix({ next, privateKey, publicKey, revokationCertificate }) {
+export default function StepSix() {
+    const state = useSelector(state => state);
     const [downloadUrl, setDownloadUrl] = useState('');
     const [downloaded, setDownloaded] = useState(false);
     const { download } = specific.useJSONDownloader();
   
     const dlData = {
         keys: {
-            public: publicKey,
-            private: privateKey,
-            revokationCert: revokationCertificate
+            publicKeyArmored: state.dropFile.keys.publicKeyArmored,
+            privateKeyArmored: state.dropFile.keys.privateKeyArmored,
+            revokationCert: state.dropFile.keys.revokationCertificate
         },
-        passwords: [],
-        notes: [],
-        files: [],
-        calendar: [],
-        keys: [],
-        settings: {
-            idleTimeout: 3
-        },
+        data: initialStateDropfileData
     }
 
-    const handleDownload = _ => {
+    const next = _ => {
+        dispatchers.setCurrentPage('Authenticate');
+    }
+
+    const handleDownload = async () => {
+        // encrypt the data object
+        const encryptedDropfileData = await utilities.encryptStringWithArmoredKey(JSON.stringify(dlData.data), state.dropFile.keys.publicKeyArmored);
+
         download({
-            data: JSON.stringify(dlData),
-            name: 'db.crypt'
+            data: JSON.stringify({...dlData, data: encryptedDropfileData}),
+            name: 'safedrop.json'
         });
         setDownloaded(true);
     }
@@ -52,7 +56,7 @@ export default function StepSix({ next, privateKey, publicKey, revokationCertifi
                             size="sm"
                             onClick={determineButtonAction()}
                         >
-                            {!downloaded ? 'Download' : "Finish!"}
+                            {!downloaded ? 'Download' : "Continue!"}
                         </Button>
                     </Form.Group>
                 </Col>

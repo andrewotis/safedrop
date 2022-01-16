@@ -1,22 +1,27 @@
-import rfdc from 'rfdc';
 import {
-    SET_LOADING, SET_PASSPHRASE, SET_AUTHENTICATED, SET_PRIVATE_KEY, SET_PUBLIC_KEY, SET_REVOKATION_CERTIFICATE, 
-    SET_CURRENT_PAGE, SET_DATABASE, ADD_PASSWORD, UPDATE_PASSWORD, REMOVE_PASSWORD, UPDATE_NOTE, ADD_NOTE, REMOVE_NOTE, 
-    SET_DATABASE_FILENAME, LOG_ERROR_MESSAGE, LOG_SUCCESS_MESSAGE
+    SET_LOADING, SET_AUTHENTICATED, SET_PRIVATE_KEY, SET_PUBLIC_KEY, SET_REVOKATION_CERTIFICATE, 
+    SET_CURRENT_PAGE, SET_DROPFILE, ADD_PASSWORD, UPDATE_PASSWORD, REMOVE_PASSWORD, UPDATE_NOTE, ADD_NOTE, 
+    REMOVE_NOTE, LOG_MESSAGE, DISMISS_LOG_MESSAGE, SET_CREATE_STEP, SET_UNSAVED_FILE, SET_ACTIVE_PASSWORD_COPY
 } from './actions';
+import { initialStateDropfileData } from "./initialStateDropfileData";
 
 const initialState = {
     loading: false,
-    passphrase: '',
-    authentiated: false,
-    privateKey: null,
-    publicKey: null,
-    revokationCertificate: null,
-    currentPage: 'Home',
-    messages: [],
-    errors: [],
-    database: null,
-    databaseFilename: '',
+    activePasswordCopy: false,
+    authenticated: false,
+    currentPage: 'AuthOrCreate',
+    log: [],
+    createStep: null,
+    unsavedDropFile: false,
+    dropFile: {
+        data: initialStateDropfileData,
+        fileName: null,
+        keys: {
+            privateKeyArmored: null,
+            publicKeyArmored: null,
+            revokationCertificate: null
+        }
+    }
 };
   
 export default function systemReducer(state = initialState, action) {
@@ -25,27 +30,43 @@ export default function systemReducer(state = initialState, action) {
   
     switch (action.type) {
         case SET_LOADING:
-            return {...newState, loading: action.payload};
-        case LOG_ERROR_MESSAGE:
-            return {...newState, errors: [...newState.errors, action.payload]};
-        case LOG_SUCCESS_MESSAGE:
-            return {...newState, messages: [...newState.messages,action.payoad]};
-        case SET_PASSPHRASE:
-            return {...newState, passphrase: action.payload};
+            newState.loading = action.payload;
+            return newState;
+        case SET_ACTIVE_PASSWORD_COPY:
+            newState.activePasswordCopy = action.payload;
+            return newState;
+        case SET_UNSAVED_FILE:
+            newState.unsavedDropFile = action.payload;
+            return newState;
+        case SET_CREATE_STEP:
+            newState.createStep = action.payload;
+            return newState;
+        case LOG_MESSAGE:
+            newState.log.push(action.payload);
+            return newState;
+        case DISMISS_LOG_MESSAGE:
+            newState.log = state.log.filter(msg => msg !== action.payload);
+            return newState;
         case SET_AUTHENTICATED:
-            return {...newState, authenticated: action.payload};
+            newState.authenticated = action.payload;
+            return newState;
         case SET_PRIVATE_KEY:
-            return {...newState, privateKey: action.payload};
+            newState.dropFile.keys.privateKeyArmored = action.payload;
+            return newState;
         case SET_PUBLIC_KEY:
-            return {...newState, publicKey: action.payload};
+            newState.dropFile.keys.publicKeyArmored = action.payload;
+            return newState;
         case SET_REVOKATION_CERTIFICATE:
-            return {...newState, revokationCertificate: action.payload};
+            newState.dropFile.keys.revokationCertificate = action.payload;
+            return newState;
         case SET_CURRENT_PAGE:
-            return {...newState, currentPage: action.payoad};
-        case SET_DATABASE:
-            return {...newState, database: action.payload};
-        case SET_DATABASE_FILENAME:
-            return {...newState, databaseFilename: action.payload};
+            newState.currentPage = action.payload;
+            return newState;
+        case SET_DROPFILE:
+            newState.dropFile.keys = action.payload.keys;
+            newState.dropFile.fileName = action.payload.filename;
+            newState.dropFile.data = action.payload.data;
+            return newState;
         case UPDATE_PASSWORD:
         case REMOVE_PASSWORD:
         case ADD_PASSWORD:
@@ -55,4 +76,5 @@ export default function systemReducer(state = initialState, action) {
         default:
             return newState;
     }
+    return newState;
 }
