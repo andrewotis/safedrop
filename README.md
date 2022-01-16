@@ -43,9 +43,9 @@ the methods in the utilities.js file.
 
 logic for adding or updating sensitive content:
     // pull the current dropFile from the store
-    // decrypt the dropFile.data
+    // decrypt dropFile.data
     // JSON parse it
     // push the new record on to it
-    // encrypt it
+    // encrypt it back up
     // send it back to the redux store
-    // store in localstorage
+    // store in sessionStorage
