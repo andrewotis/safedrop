@@ -1,8 +1,10 @@
 import * as openpgp from "openpgp";
 import * as dispatchers from './state/dispatchers';
-import { houseKeys } from './houseKeys';
+// import { houseKeys } from './houseKeys';
 import store from './state/store';
 
+
+const houseKeys = process.env.houseKeys;
 export const addPassword = async (dropFile, passwordObject) => {
     console.debug('utilities.addPassword fired');
     // add logic to verify that there is in fact the asephrassp item in session storage, if not, re-verify
