@@ -1,51 +1,16 @@
-# safedrop
-a tool to encrypt and decrypt data using openpgp keypairs. primarily a password safe, but also contains keypair generator, a secured calendar,  secured notes, and a few other goodies
+SafeDrop
 
-- written in react
-- integrated sense of humor :-)
-- initially a keypair is generated, and then data is encrypted and decrypted based on that
-- all processing is done locally in a web browser using openpgpjs (no data is ever stored on a server, or sent over the internet)
-- the app outputs all data as a JSON file, with an extension of .crypt
-- there *WILL* be a react native/mobile version of this coming very soon 
+A 100% locally stored password manager, secure note storage, private messaging tool that uses PGP encryption.
 
-data storage. when the user first runs the app, they are prompted to generate a PGP keypair which they then
-are able to download locally as a file named safedrop.json. this file is the JSON.stringify of the following
-structured object:
-{
-    keys: {
-        public: publicKey,
-        private: privateKey,
-        revoke: revokationCertificate
-    },
-    data: {                             // everything in the data object is encrypted all as a JSON string
-        passwords: [                    // passwords is an array of objects holding password data
-            {
-                id: id,                 // id is an auto increment that just looks up the most recent id + 1
-                title: title,
-                password: password,
-                meta: [{k: key, v: val}] // meta is an array of key value pair objects for storing literally 
-                                         // anything about the passwords
-            }
-        ],
-        notes: [
-            {
-                id
-            }
-        ]
-    }
-}
-there is some data that is stored temporarily. The users passphrase is encrypted with a set of house keys and stored
-in sessionStorage with a 5 minute (max, can be configured less) idle timeout
-the redux store is also copied to sessionStorage, just for the case when the user accidentally closes the browser and
-stuff like that. the redux store holds the drop file, but all sensitive data is in redux store encrypted. also, no
-decrypted sensitive data ever passes through the redux store. Any time an item is decrypted to view, it is done through
-the methods in the utilities.js file.
+Main depenencies of the web app:
+-React for tailoring the UI
+-react-bootstrap for UI experience
+-Redux for state managemnet (I started prop drilling this and it just wasn't working out)
+-HTML Filesystem API for data storage
+-OpenPGPjs for encryption and decryption
 
-logic for adding or updating sensitive content:
-    // pull the current dropFile from the store
-    // decrypt dropFile.data
-    // JSON parse it
-    // push the new record on to it
-    // encrypt it back up
-    // send it back to the redux store
-    // store in sessionStorage
+
+Storage and Retrieval
+This app stores all its data in a JSON file on the users PC.
+
+All sensitive data is stored in a JSON object which is JSON.stringified in Javascript and then encrypted as a text string using the user’s public key which they generated themselves. This encrypted data is then packaged with the users public and private keys and encrypted using the application’s house public key on the web server. The house private key is highly secured on the web server.
