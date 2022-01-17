@@ -20,9 +20,6 @@ export default function Content() {
         'Passwords': <Passwords />,
         'Home': <Home />,
         'PasswordGenerator': <PasswordGenerator />,
-        'RevokeKey' : null,
-        'ImportKey' : null,
-        'ExportKey' : null,
     }
 
     const logTypeMap = {

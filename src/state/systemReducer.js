@@ -9,7 +9,7 @@ const initialState = {
     loading: false,
     activePasswordCopy: false,
     authenticated: false,
-    currentPage: 'Authenticate',
+    currentPage: 'Filez',
     log: [],
     createStep: null,
     unsavedDropFile: false,

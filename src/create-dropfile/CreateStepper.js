@@ -6,11 +6,11 @@ export default function CreateStepper({ step }) {
     return (
         <Stepper 
             steps={[
-                {title: 'provide passphrase'},
+                {title: 'set passphrase'},
                 {title: 'confirm passphrase'},
-                {title: 'generate keys'}, 
-                {title: 'listen to recording'}, 
-                {title: 'confirm understanding'}, 
+                {title: 'generate keypair'},
+                {title: 'watch video'},
+                {title: 'practice passphrase'},
                 {title: 'download database'},
             ]} 
             activeStep={ step }
