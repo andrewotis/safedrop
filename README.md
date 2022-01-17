@@ -9,6 +9,13 @@ Main depenencies of the web app:
 -HTML Filesystem API for data storage
 -OpenPGPjs for encryption and decryption
 
+Basic Core Principals so far:
+- nothing should be transmitted over the wire. No relational databases, all local filesystem storage.
+- upon successful installation, this app should be able to be run 100% offline and stored to secured local files.
+- the app should make it very easy for any user of any skill level to use top of the line security/encryption tools
+- the app should help users learn best practices for online privacy and security
+- the app should be highly customizable and provide a wicked UI/UX
+- should run on browser AND mobile, and provide a way to *easily* sync up the two
 
 Storage and Retrieval
 This app stores all its data in a JSON file on the users PC.
