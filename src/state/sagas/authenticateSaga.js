@@ -5,8 +5,8 @@ import {
     SET_LOADING,
     SET_AUTHENTICATED,
     SET_CURRENT_PAGE
-} from './actions';
-import * as utilities from './../utilities';
+} from '../actions';
+import * as utilities from '../../utilities';
 
 function* authenticate(action) {
     yield put({ type: SET_LOADING, payload: true });

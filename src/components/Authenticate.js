@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Container, Row, Col, Button, Form } from "react-bootstrap";
 import { useUploader } from "react-files-hooks";
 import { useSelector } from "react-redux";
-import * as dispatchers from './../state/dispatchers';
+import { setCreateStep, setCurrentPage } from "../state/slices/system/systemDispatchers";
 import * as utilities from './../utilities';
 import { Icon } from '@iconify/react';
 import Loading from './Loading';
@@ -18,22 +18,27 @@ export default function Authenticate() {
         onError: (error) => {},
     });
 
-    const handleFileChange = (e) => {
-        //dispatchers.setLoading(true);
+    const createClick = _ => {
+        setCurrentPage('Create');
+        setCreateStep(1);
+    }
+
+    const handleFileChange = (e) => {/*
+        setLoading(true);
         const fileReader = new FileReader();
         const filename = e.target.files[0].name;
         fileReader.readAsText(e.target.files[0], "UTF-8");
         fileReader.onload = (e) => {
             const dropFile = JSON.parse(e.target.result);
             dispatchers.setDropFile(dropFile, filename);
-            dispatchers.setLoading(false);
-        };
+            setLoading(false);
+        };*/
     };
 
     const checkPassphrase = async () => {
-        const temp = passphrase;
+        /*const temp = passphrase;
         setPassphrase('');
-        dispatchers.setLoading(true);
+        setLoading(true);
         dispatchers.verifyPassphrase({
             key: state.dropFile.keys.privateKeyArmored, 
             passphrase: temp
@@ -42,7 +47,7 @@ export default function Authenticate() {
         sessionStorage.setItem('asephrassp', encryptedPassphrase);
         await utilities.loadSettings(state.dropFile);
         const decryptedPassphrase = await utilities.decryptWithHouseKey(encryptedPassphrase);
-        dispatchers.setLoading(false);
+        setLoading(false);*/
     };
 
     return (
@@ -95,10 +100,7 @@ export default function Authenticate() {
                             </Button>
                             or
                             <Button
-                                onClick={() => {
-                                    dispatchers.setCurrentPage('Create');
-                                    dispatchers.setCreateStep(1);
-                                }}
+                                onClick={() => createClick()}
                                 variant="outline-light"
                                 className="w-100 cursor-pointer"
                             >

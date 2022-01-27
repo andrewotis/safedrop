@@ -50,7 +50,7 @@ export const createMessage = async(stringToEncrypt) => {
 export const encrypt = async(messageObject, publicKeyObject) => {
     const encrypted = await openpgp.encrypt({
         message: messageObject,
-        encryptionKeys: publicKey
+        encryptionKeys: publicKeyObject
     });
     return encrypted;
 }

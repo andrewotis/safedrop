@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { specific } from 'react-files-hooks';
 import { Icon } from '@iconify/react';
 import * as dispatchers from './../state/dispatchers';
+import { setCurrentPage } from "../state/slices/system/systemDispatchers";
 
 export default function Menu() {
     const state = useSelector(state => state);
@@ -14,7 +15,6 @@ export default function Menu() {
             data: JSON.stringify(state.dropFile),
             name: 'safedrop.json'
         });
-        dispatchers.setUnsavedDropFile(false);
     }
 
     return (
@@ -38,7 +38,7 @@ export default function Menu() {
                                 !state.authenticated &&
                                     <Nav.Link
                                         onClick={
-                                            () => dispatchers.setCurrentPage('PasswordGenerator')
+                                            () => setCurrentPage('PasswordGenerator')
                                         }
                                         className="cursor-pointer"
                                     >
@@ -50,13 +50,13 @@ export default function Menu() {
                                     <>
                                         <NavDropdown title="Passwords" id="nav-dropdown-keys">
                                             <NavDropdown.Item
-                                                onClick={() => dispatchers.setCurrentPage('Passwords')}
+                                                onClick={() => setCurrentPage('Passwords')}
                                                 className="cursor-pointer"
                                             >
                                                 View/Manage
                                             </NavDropdown.Item>
                                             <NavDropdown.Item
-                                                onClick={() => dispatchers.setCurrentPage('PasswordGenerator')}
+                                                onClick={() => setCurrentPage('PasswordGenerator')}
                                             >
                                                 Generator
                                             </NavDropdown.Item>
@@ -64,11 +64,11 @@ export default function Menu() {
                                                 Update Reminder
                                             </NavDropdown.Item>
                                         </NavDropdown>
-                                        <Nav.Link onClick={() => dispatchers.setCurrentPage('Notes')} className="cursor-pointer">Notes</Nav.Link>
-                                        <Nav.Link onClick={() => dispatchers.setCurrentPage('Calendar')} className="cursor-pointer">Calendar</Nav.Link>
-                                        <Nav.Link onClick={() => dispatchers.setCurrentPage('Files')} className="cursor-pointer">Files</Nav.Link>
+                                        <Nav.Link onClick={() => setCurrentPage('Notes')} className="cursor-pointer">Notes</Nav.Link>
+                                        <Nav.Link onClick={() => setCurrentPage('Calendar')} className="cursor-pointer">Calendar</Nav.Link>
+                                        <Nav.Link onClick={() => setCurrentPage('Files')} className="cursor-pointer">Files</Nav.Link>
                                         <NavDropdown title="Keys" id="nav-dropdown-keys">
-                                            <NavDropdown.Item onClick={() => dispatchers.setCurrentPage('GenerateKeys')} href="#">Generate</NavDropdown.Item>
+                                            <NavDropdown.Item onClick={() => setCurrentPage('GenerateKeys')} href="#">Generate</NavDropdown.Item>
                                             <NavDropdown.Item disabled href="#">Import</NavDropdown.Item>
                                             <NavDropdown.Item disabled href="#">Export</NavDropdown.Item>
                                         </NavDropdown>

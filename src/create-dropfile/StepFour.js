@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Button, Form, Spinner } from "react-bootstrap";
-import ReactAudioPlayer from 'react-audio-player';
 import * as dispatchers from '../state/dispatchers';
 
 export default function StepFour() {
@@ -16,11 +15,6 @@ export default function StepFour() {
                         </Form.Label>
                         <br />
                         <img src="anonymous.jpg" style={{height:'200px', marginBottom:"20px"}}/>
-                        <ReactAudioPlayer
-                            src="audio.ogg"
-                            controls
-                            onEnded={() => setAllowNext(true)}
-                        />
                     </Form.Group>
                 </Col>
             </Row>

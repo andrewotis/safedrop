@@ -1,25 +1,24 @@
 import React from 'react';
 import { useSelector } from "react-redux";
 import { Container, Alert } from 'react-bootstrap';
-import GenerateKeys from './GenerateKeys';
-import AuthOrCreate from './AuthOrCreate';
-import Create from '../create-dropfile/Create';
+import Create from '../create/Create';
 import Authenticate from './Authenticate';
+/*import GenerateKeys from './GenerateKeys';
 import Passwords from '../passwords/Passwords';
 import Home from './Home';
-import PasswordGenerator from "../passwords/PasswordGenerator";
-import * as dispatchers from './../state/dispatchers';
+import PasswordGenerator from "../passwords/PasswordGenerator";*/
+import { dismissLogMessage } from './../state/slices/system/systemDispatchers';
+
 
 export default function Content() {
-    const state = useSelector(state => state);
+    const system = useSelector(state => state.system);
     const componentMap = {
-        'GenerateKeys' : <GenerateKeys />,
-        'AuthOrCreate' : <AuthOrCreate />,
+        //'GenerateKeys' : <GenerateKeys />,
         'Create' : <Create />,
         'Authenticate' : <Authenticate />,
-        'Passwords': <Passwords />,
-        'Home': <Home />,
-        'PasswordGenerator': <PasswordGenerator />,
+        //'Passwords': <Passwords />,
+        //'Home': <Home />,
+        //'PasswordGenerator': <PasswordGenerator />,
     }
 
     const logTypeMap = {
@@ -30,14 +29,14 @@ export default function Content() {
     }
 
     const displayContent = () => {
-        return componentMap[state.currentPage];
+        return componentMap[system.currentPage];
     }
 
     return (
         <>
             <Container fluid className="dark-safe-bg">
                 <Container className="pt-4 text-light w-75 m-auto darkbg h-100">
-                    { state.log.map((alert, i) => <Alert key={i} variant={logTypeMap[alert.type]} className="m-auto w-75" onClose={() => dispatchers.dismissLogMessage(alert)} dismissible>{alert.message}</Alert>) }
+                    { system.log.map((alert, i) => <Alert key={i} variant={logTypeMap[alert.type]} className="m-auto w-75" onClose={() => dismissLogMessage(alert)} dismissible>{alert.message}</Alert>) }
                     { displayContent() }
                 </Container>
             </Container>

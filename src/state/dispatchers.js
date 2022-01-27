@@ -1,19 +1,7 @@
 import store from './store';
 import * as actions from './actions';
 
-export const setLoading = (status) => {
-    store.dispatch({
-        type: actions.SET_LOADING,
-        payload: status
-    });
-}
 
-export const setActivePasswordCopy = status => {
-    store.dispatch({
-        type: actions.SET_ACTIVE_PASSWORD_COPY,
-        payload: status
-    });
-}
 
 export const setDropFile = (fileJSON, fileName) => {
     store.dispatch({
@@ -23,13 +11,6 @@ export const setDropFile = (fileJSON, fileName) => {
             data: fileJSON.data,
             filename: fileName
         }        
-    });
-}
-
-export const setUnsavedDropFile = (status) => {
-    store.dispatch({
-        type: actions.SET_UNSAVED_FILE,
-        payload: status
     });
 }
 
@@ -67,12 +48,7 @@ export const logMessage = msgObj => { // { type: "error", message: "error messag
     });
 }
 
-export const dismissLogMessage = msg => {
-    store.dispatch({
-        type: actions.DISMISS_LOG_MESSAGE,
-        payload: msg
-    })
-}
+
 
 export const setPrivateKey = key => {
     store.dispatch({
@@ -95,19 +71,7 @@ export const setRevokationCertificate = cert => {
     })
 }
 
-export const setCurrentPage = page => {
-    store.dispatch({
-        type: actions.SET_CURRENT_PAGE,
-        payload: page
-    });
-}
 
-export const setCreateStep = step => {
-    store.dispatch({
-        type: actions.SET_CREATE_STEP,
-        payload: step
-    })
-}
 
 export const generateKeypair = passphrase => {
     store.dispatch({

@@ -1,20 +1,7 @@
-export const SET_LOADING = "SET_LOADING";
-export const VERIFY_PASSPHRASE_REQUESTED = "VERIFY_PASSPHRASE_REQUESTED";
-export const SET_AUTHENTICATED = "SET_AUTHENTICATED";
-export const SET_PRIVATE_KEY = "SET_PRIVATE_KEY";
-export const SET_PUBLIC_KEY = "SET_PUBLIC_KEY";
-export const SET_REVOKATION_CERTIFICATE = "SET_REVOKATION_CERTIFICATE";
-export const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
-export const SET_DROPFILE = "SET_DROPFILE";
-export const ADD_PASSWORD = "ADD_PASSWORD";
-export const UPDATE_PASSWORD = "UPDATE_PASSWORD";
-export const REMOVE_PASSWORD = "REMOVE_PASSWORD";
-export const ADD_NOTE = "ADD_NOTE";
-export const UPDATE_NOTE = "UPDATE_NOTE";
-export const REMOVE_NOTE = "REMOVE_NOTE"; 
-export const LOG_MESSAGE = "LOG_MESSAGE";
-export const DISMISS_LOG_MESSAGE = "DISMISS_LOG_MESSAGE";
-export const GENERATE_KEYPAIR_REQUESTED = "GENERATE_KEYPAIR_REQUESTED";
-export const SET_CREATE_STEP = "SET_CREATE_STEP";
-export const SET_UNSAVED_FILE = "SET_UNSAVED_FILE";
-export const SET_ACTIVE_PASSWORD_COPY = "SET_ACTIVE_PASSWORD_COPY";
+
+
+
+
+/* ---------------------- */
+/*      decrypted         */
+/* ---------------------- */

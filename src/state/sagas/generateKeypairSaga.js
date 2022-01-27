@@ -4,8 +4,8 @@ import {
     GENERATE_KEYPAIR_REQUESTED,
     LOG_MESSAGE,
     SET_LOADING, SET_PUBLIC_KEY, SET_REVOKATION_CERTIFICATE, SET_PRIVATE_KEY, SET_CREATE_STEP
-} from "./actions";
-import * as utilities from './../utilities';
+} from "../actions";
+import * as utilities from '../../utilities';
 
 function* generate(action) {
     yield put({ type: SET_LOADING, payload: true });

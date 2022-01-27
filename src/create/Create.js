@@ -9,18 +9,18 @@
     import { useSelector } from "react-redux";
 
     export default function Create() {
-        const state = useSelector(state => state);
+        const system = useSelector(state => state.system);
 
         return (
             <>
                 <Container className="text-center">
-                    <h2>Create encrypted database</h2>
-                    <CreateStepper step={state.createStep-1}/>
-                    { state.createStep === 1 && <StepOne /> }
-                    { state.createStep === 2 && <StepTwo /> }
-                    { state.createStep === 3 && <StepThree /> }
-                    { state.createStep === 4 && <StepFour /> }
-                    { state.createStep === 5 && <StepFive /> }
+                    <h2>Create DropFile</h2>
+                    <CreateStepper step={system.createStep-1}/>
+                    { system.createStep === 1 && <StepOne /> }
+                    { system.createStep === 2 && <StepTwo /> }
+                    { system.createStep === 3 && <StepThree /> }
+                    { system.createStep === 4 && <StepFour /> }
+                    { system.createStep === 5 && <StepFive /> }
                 </Container>
             </>
         );

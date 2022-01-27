@@ -3,7 +3,7 @@ import * as dispatchers from './state/dispatchers';
 // import { houseKeys } from './houseKeys';
 import store from './state/store';
 
-
+/*
 const houseKeys = process.env.houseKeys;
 export const addPassword = async (dropFile, passwordObject) => {
     console.debug('utilities.addPassword fired');
@@ -16,7 +16,6 @@ export const addPassword = async (dropFile, passwordObject) => {
     const encrypted = await encryptDropFileData({...dropFile, data: decrypted});
     console.debug('encrypted', encrypted);
     dispatchers.updateDropFile({...dropFile, data: encrypted});
-    dispatchers.setUnsavedDropFile(true);
     dispatchers.setLoading(false);
     return encrypted;
 }
@@ -59,17 +58,8 @@ export const settingsHelper = {
     },
 }
 
-export const blockClipboardAccess = _ => {
-    const settings = settingsHelper.get();
-    dispatchers.setActivePasswordCopy(true);
-    setTimeout(() => {
-        dispatchers.setActivePasswordCopy(false);
-    }, (settings.clipboardEraseTimer * 1000));
-}
-
 export const clickToCopy = async (str) => {
     console.debug('utilities.clickToCopy fired');
-    blockClipboardAccess();
     const settings = settingsHelper.get();
     copyToClipBoard(str);
 
@@ -237,3 +227,4 @@ export const triedToPaste = e => {
     alert('no pasting');
     return false;
 }
+*/
