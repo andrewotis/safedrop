@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {Navbar, Nav, Dropdown, Container, Row, Button, Col} from 'react-bootstrap';
 import { useSelector } from "react-redux";
 import { Icon } from '@iconify/react';
-import * as dispatchers from './../state/dispatchers';
+import * as dispatchers from '../../dispatchers';
 import * as utilities from './../utilities';
 import Loading from "../components/Loading";
 

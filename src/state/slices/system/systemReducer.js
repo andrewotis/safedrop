@@ -1,7 +1,7 @@
 import {
     SET_LOADING, SET_AUTHENTICATED, ADD_PASSWORD, UPDATE_PASSWORD, REMOVE_PASSWORD, UPDATE_NOTE, ADD_NOTE,
     REMOVE_NOTE, LOG_MESSAGE, DISMISS_LOG_MESSAGE, SET_CREATE_STEP, SET_CURRENT_PAGE
-} from '../../actions';
+} from './systemActions';
 
 const initialState = {
     loading: false,
@@ -15,7 +15,7 @@ const initialState = {
 export default function systemReducer(state = initialState, action) {
     const clone = require('rfdc')()
     let newState = clone(state);
-  
+
     switch (action.type) {
         case SET_LOADING:
             newState.loading = action.payload;
