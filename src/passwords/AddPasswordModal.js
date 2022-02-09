@@ -3,7 +3,7 @@ import { Container, Tooltip, OverlayTrigger, InputGroup, FormControl, Row, Col, 
 import { Icon } from '@iconify/react';
 import { useSelector } from "react-redux";
 import * as utilities from '../utilities';
-import * as dispatchers from '../../dispatchers';
+import * as dispatchers from '../state/dispatchers';
 import Loading from '../components/Loading';
 
 export default function AddPasswordModal({ show, setShow }) {

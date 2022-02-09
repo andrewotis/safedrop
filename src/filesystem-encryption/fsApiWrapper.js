@@ -28,20 +28,9 @@ export const readFile = async(fileHandle) => {
     };
 }
 
-export const writeFile = async(fileHandle, contents) => {
-    if (fileHandle.createWriter) {
-        console.log('got the permission');
-        const writer = await fileHandle.createWriter();
-        await writer.write(contents);
-        await writer.close();
-        return;
-    }
-    // For Chrome 83 and later.
-    // Create a FileSystemWritableFileStream to write to.
+export const writeFile = async (fileHandle, contents) => {
     const writable = await fileHandle.createWritable();
-    // Write the contents of the file to the stream.
     await writable.write(contents);
-    // Close the file and write the contents to disk.
     await writable.close();
 }
 

@@ -1,4 +1,4 @@
-/*import store from './store';
+import store from './store';
 import * as actions from './actions';
 
 
@@ -78,4 +78,4 @@ export const generateKeypair = passphrase => {
         type: actions.GENERATE_KEYPAIR_REQUESTED,
         payload: passphrase
     });
-}*/
+}

@@ -3,6 +3,7 @@ import { Navbar, Nav, NavDropdown, Container } from 'react-bootstrap';
 import { useSelector } from "react-redux";
 import { specific } from 'react-files-hooks';
 import { Icon } from '@iconify/react';
+import * as dispatchers from './../state/dispatchers';
 import { setCurrentPage } from "../state/slices/system/systemDispatchers";
 
 export default function Menu() {

@@ -1,4 +1,5 @@
 import * as openpgp from "openpgp";
+import * as dispatchers from './state/dispatchers';
 // import { houseKeys } from './houseKeys';
 import store from './state/store';
 
@@ -220,9 +221,10 @@ export const decryptWithHouseKey = async (stringToDecrypt) => {
     }
 
 }
-*/
+
 export const triedToPaste = e => {
     e.preventDefault();
     alert('no pasting');
     return false;
 }
+*/

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import { Container, Row, Col, Button, Form } from "react-bootstrap";
 import { triedToPaste } from '../utilities';
-import * as dispatchers from '../../dispatchers';
+import * as dispatchers from '../state/dispatchers';
 import { useSelector } from "react-redux";
 import * as utilties from '../utilities';
 import * as utilities from "../utilities";

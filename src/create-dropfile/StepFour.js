@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Button, Form, Spinner } from "react-bootstrap";
-import * as dispatchers from '../../dispatchers';
+import * as dispatchers from '../state/dispatchers';
 
 export default function StepFour() {
     const [allowNext, setAllowNext] = useState(false);

@@ -4,8 +4,8 @@ import {
     DISMISS_LOG_MESSAGE,
     SET_CURRENT_PAGE,
     SET_CREATE_STEP,
-    LOG_MESSAGE,
 } from "./systemActions";
+import * as actions from "../../actions";
 
 export const setLoading = status => {
     store.dispatch({
@@ -14,18 +14,11 @@ export const setLoading = status => {
     });
 }
 
-export const logMessage = msg => {
-    store.dispatch({
-        type: LOG_MESSAGE,
-        payload: msg
-    });
-}
-
 export const dismissLogMessage = msg => {
     store.dispatch({
         type: DISMISS_LOG_MESSAGE,
         payload: msg
-    });
+    })
 }
 
 export const setCurrentPage = page => {
@@ -39,5 +32,5 @@ export const setCreateStep = step => {
     store.dispatch({
         type: SET_CREATE_STEP,
         payload: step
-    });
+    })
 }

@@ -1,16 +1,24 @@
 import React from 'react';
 import { useSelector } from "react-redux";
 import { Container, Alert } from 'react-bootstrap';
+import Create from '../create/Create';
 import Authenticate from './Authenticate';
+/*import GenerateKeys from './GenerateKeys';
+import Passwords from '../passwords/Passwords';
+import Home from './Home';
+import PasswordGenerator from "../passwords/PasswordGenerator";*/
 import { dismissLogMessage } from './../state/slices/system/systemDispatchers';
-import CreateDropfile from './CreateDropfile';
+
 
 export default function Content() {
     const system = useSelector(state => state.system);
-
     const componentMap = {
-        'CreateDropfile' : <CreateDropfile />,
+        //'GenerateKeys' : <GenerateKeys />,
+        'Create' : <Create />,
         'Authenticate' : <Authenticate />,
+        //'Passwords': <Passwords />,
+        //'Home': <Home />,
+        //'PasswordGenerator': <PasswordGenerator />,
     }
 
     const logTypeMap = {

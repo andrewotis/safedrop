@@ -1,4 +1,4 @@
-/*import { initialStateDropfileData } from "../../initialStateDropfileData";
+import { initialStateDropfileData } from "../../initialStateDropfileData";
 import {
     SET_LOADING
 } from '../../actions';
@@ -18,4 +18,4 @@ export default function decryptedReducer(state = initialState, action) {
         default:
             return newState;
     }
-}*/
+}

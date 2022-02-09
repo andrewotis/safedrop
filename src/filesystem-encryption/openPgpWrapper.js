@@ -1,5 +1,5 @@
 import * as openpgp from 'openpgp';
-import { logMessage } from './../state/slices/system/systemDispatchers';
+import * as dispatchers from "../state/dispatchers";
 
 export const generateKeypair = async (passphrase, username = 'Safe Drop') => {
     const { privateKey, publicKey, revocationCertificate } = await openpgp.generateKey({
@@ -32,7 +32,7 @@ export const readPrivateKey = async (privateKeyArmored, passphrase) => {
             passphrase
         });
     } catch (error) {
-        logMessage({ type: 'error', message: error.message })
+        dispatchers.logMessage({ type: 'error', message: error.message })
     }
     return privateKey;
 }

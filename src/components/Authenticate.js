@@ -19,7 +19,7 @@ export default function Authenticate() {
     });
 
     const createClick = _ => {
-        setCurrentPage('CreateDropfile');
+        setCurrentPage('Create');
         setCreateStep(1);
     }
 
