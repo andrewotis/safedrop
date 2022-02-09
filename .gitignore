@@ -6,3 +6,4 @@ node_modules/
 .idea
 src/houseKeys.js
 .env
+system-keys.json
