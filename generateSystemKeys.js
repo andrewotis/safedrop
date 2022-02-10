@@ -9,8 +9,6 @@ const fs = require('fs');
         passphrase: pass, // protects the private key
     });
 
-
-
     const str = "REACT_APP_SYSTEM_PRIVATE_KEY=" + btoa(privateKey) + "\nREACT_APP_SYSTEM_PUBLIC_KEY=" + btoa(publicKey)
         + "\nREACT_APP_SYSTEM_KEY_PASSPHRASE=" + pass
     console.log(str)

@@ -11,7 +11,6 @@
     "react": "^17.0.2",
     "react-bootstrap": "^2.1.0",
     "react-dom": "^17.0.2",
-    "react-files-hooks": "^2.0.0",
     "react-redux": "^7.2.6",
     "react-scripts": "5.0.0",
     "react-stepper-horizontal": "^1.0.11",

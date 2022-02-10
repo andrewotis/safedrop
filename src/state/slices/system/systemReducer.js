@@ -1,19 +1,19 @@
 import {
     SET_LOADING, SET_AUTHENTICATED, ADD_PASSWORD, UPDATE_PASSWORD, REMOVE_PASSWORD, UPDATE_NOTE, ADD_NOTE,
-    REMOVE_NOTE, LOG_MESSAGE, DISMISS_LOG_MESSAGE, SET_CREATE_STEP, SET_CURRENT_PAGE
-} from '../../actions';
+    REMOVE_NOTE, LOG_MESSAGE, DISMISS_LOG_MESSAGE, SET_CREATE_STEP, SET_CURRENT_PAGE, SET_FILE_HANDLE, GET_FILE_HANDLE
+} from './systemActions';
 
 const initialState = {
     loading: false,
-    activePasswordCopy: false,
     authenticated: false,
     currentPage: 'Authenticate',
     log: [],
     createStep: null,
+    fileHandle: null,
 };
   
 export default function systemReducer(state = initialState, action) {
-    const clone = require('rfdc')()
+    const clone = require('rfdc')();
     let newState = clone(state);
   
     switch (action.type) {
@@ -35,6 +35,11 @@ export default function systemReducer(state = initialState, action) {
         case SET_CURRENT_PAGE:
             newState.currentPage = action.payload;
             return newState;
+        case SET_FILE_HANDLE:
+            newState.fileHandle = action.payload;
+            return newState;
+        case GET_FILE_HANDLE:
+            return newState.fileHandle;
         case UPDATE_PASSWORD:
         case REMOVE_PASSWORD:
         case ADD_PASSWORD:

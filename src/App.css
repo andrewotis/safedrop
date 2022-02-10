@@ -74,6 +74,10 @@
 .color4 { color: #e6f3ff; }
 .color5 { color: #c5d7ed; }
 
+.file-input {
+    background-color: #a7a8a8 !important;
+    border: 1px solid #ced4da !important;
+}
 /* 
 #7fa2cc
 #436ea3

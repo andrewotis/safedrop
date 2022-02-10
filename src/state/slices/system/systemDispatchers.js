@@ -3,13 +3,19 @@ import {
     SET_LOADING,
     DISMISS_LOG_MESSAGE,
     SET_CURRENT_PAGE,
-    SET_CREATE_STEP,
+    SET_CREATE_STEP, LOG_MESSAGE, SET_FILE_HANDLE, SET_AUTHENTICATED,
 } from "./systemActions";
-import * as actions from "../../actions";
 
 export const setLoading = status => {
     store.dispatch({
         type: SET_LOADING,
+        payload: status
+    });
+}
+
+export const setAuthenticated = status => {
+    store.dispatch({
+        type: SET_AUTHENTICATED,
         payload: status
     });
 }
@@ -19,6 +25,13 @@ export const dismissLogMessage = msg => {
         type: DISMISS_LOG_MESSAGE,
         payload: msg
     })
+}
+
+export const setFileHandle = fh => {
+    store.dispatch({
+        type: SET_FILE_HANDLE,
+        payload: fh
+    });
 }
 
 export const setCurrentPage = page => {
@@ -32,5 +45,12 @@ export const setCreateStep = step => {
     store.dispatch({
         type: SET_CREATE_STEP,
         payload: step
+    })
+}
+
+export const logMessage = msg => {
+    store.dispatch({
+        type: LOG_MESSAGE,
+        payload: msg
     })
 }

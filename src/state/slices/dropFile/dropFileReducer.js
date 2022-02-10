@@ -8,14 +8,10 @@ import {
 
 const initialState = {
     data: initialStateDropfileData,
-    fileName: null,
-    systemKeys: {
-        privateKeyArmored: null,
-        publicKeyArmored: null
-    },
     keys: {
         privateKeyArmored: null,
-        publicKeyArmored: null
+        publicKeyArmored: null,
+        revocationCertificate: null
     }
 }
 
@@ -24,12 +20,6 @@ export default function dropFileReducer(state = initialState, action) {
     let newState = clone(state);
 
     switch (action.type) {
-        case SET_PRIVATE_KEY_SYSTEM:
-            newState.systemKeys.privateKeyArmored = action.payload;
-            return newState;
-        case SET_PUBLIC_KEY_SYSTEM:
-            newState.systemKeys.publicKeyArmored = action.payload;
-            return newState;
         case SET_PRIVATE_KEY_USER:
             newState.keys.privateKeyArmored = action.payload;
             return newState;

@@ -1,5 +1,5 @@
 import * as openpgp from 'openpgp';
-import * as dispatchers from "../state/dispatchers";
+import {logMessage} from "../state/slices/system/systemDispatchers";
 
 export const generateKeypair = async (passphrase, username = 'Safe Drop') => {
     const { privateKey, publicKey, revocationCertificate } = await openpgp.generateKey({
@@ -9,19 +9,13 @@ export const generateKeypair = async (passphrase, username = 'Safe Drop') => {
     return { privateKey, publicKey, revocationCertificate }
 }
 
-export const decrypt = async (message, privateKey) => {
-    const { data: decrypted, signatures } = await openpgp.decrypt({
-        message,
-        decryptionKeys: privateKey
-    });
-    return decrypted;
-}
+
 
 export const readArmoredMessage = async (armoredString) => {
-    const message = await openpgp.readMessage({
-        armoredMessage: armoredString
+    const encryptedMessage = await openpgp.readMessage({
+        armoredMessage: armoredString // parse encrypted bytes
     });
-    return message;
+    return encryptedMessage;
 }
 
 export const readPrivateKey = async (privateKeyArmored, passphrase) => {
@@ -32,7 +26,7 @@ export const readPrivateKey = async (privateKeyArmored, passphrase) => {
             passphrase
         });
     } catch (error) {
-        dispatchers.logMessage({ type: 'error', message: error.message })
+        logMessage({ type: 'error', message: error.message })
     }
     return privateKey;
 }
@@ -53,4 +47,12 @@ export const encrypt = async(messageObject, publicKeyObject) => {
         encryptionKeys: publicKeyObject
     });
     return encrypted;
+}
+
+export const decrypt = async (message, privateKey) => {
+    const { data: decrypted, signatures } = await openpgp.decrypt({
+        message,
+        decryptionKeys: privateKey
+    });
+    return decrypted;
 }

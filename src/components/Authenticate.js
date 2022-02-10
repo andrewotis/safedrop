@@ -1,54 +1,59 @@
 import React, { useState } from "react";
-import { Container, Row, Col, Button, Form } from "react-bootstrap";
-import { useUploader } from "react-files-hooks";
+import { Container, Row, Col, Button, Form, InputGroup } from "react-bootstrap";
 import { useSelector } from "react-redux";
-import { setCreateStep, setCurrentPage } from "../state/slices/system/systemDispatchers";
-import * as utilities from './../utilities';
+import {
+    logMessage,
+    setAuthenticated,
+    setCreateStep,
+    setCurrentPage,
+    setFileHandle,
+    setLoading
+} from "../state/slices/system/systemDispatchers";
 import { Icon } from '@iconify/react';
 import Loading from './Loading';
+import {openExistingFileHandle, readFile} from "../filesystem-encryption/fsApiWrapper";
+import {decryptString, getSystemPassphrase, getSystemPrivateKey} from "../filesystem-encryption/openPgpUtils";
+import { setDropfile } from "./../state/slices/dropFile/dropFileDispatchers";
 
 export default function Authenticate() {
     const state = useSelector(state => state);
     const [passphrase, setPassphrase] = useState('');
     const [disableAllInput, setDisableAllInput] = useState(false);
-    
-// file upload stuff
-    const { uploader, reset } = useUploader({
-        onSelectFile: (file) => {},
-        onError: (error) => {},
-    });
 
-    const createClick = _ => {
-        setCurrentPage('Create');
+
+    const createClick = async() => {
+        setCurrentPage('CreateDropfile');
         setCreateStep(1);
     }
 
-    const handleFileChange = (e) => {/*
+    const chooseFileClick = async() => {
+        const fh = await openExistingFileHandle();
         setLoading(true);
-        const fileReader = new FileReader();
-        const filename = e.target.files[0].name;
-        fileReader.readAsText(e.target.files[0], "UTF-8");
-        fileReader.onload = (e) => {
-            const dropFile = JSON.parse(e.target.result);
-            dispatchers.setDropFile(dropFile, filename);
-            setLoading(false);
-        };*/
+        setFileHandle(fh);
+        const dropFileRaw = await readFile(fh);
+        const encryptedDropfile = atob(JSON.parse(dropFileRaw.contents).data);
+        setLoading(false);
     };
 
-    const checkPassphrase = async () => {
-        /*const temp = passphrase;
-        setPassphrase('');
-        setLoading(true);
-        dispatchers.verifyPassphrase({
-            key: state.dropFile.keys.privateKeyArmored, 
-            passphrase: temp
-        });
-        const encryptedPassphrase = await utilities.encryptWithHouseKey(temp);
-        sessionStorage.setItem('asephrassp', encryptedPassphrase);
-        await utilities.loadSettings(state.dropFile);
-        const decryptedPassphrase = await utilities.decryptWithHouseKey(encryptedPassphrase);
-        setLoading(false);*/
-    };
+    const next = async() => {
+        try {
+            const decryptedRoundOne = await decryptString(encryptedDropfile, getSystemPassphrase(), getSystemPrivateKey());
+            const decryptedRoundOneParsed = JSON.parse(decryptedRoundOne);
+            const decryptedRoundTwo = await decryptString(decryptedRoundOneParsed.data, passphrase, decryptedRoundOneParsed.keys.privateKeyArmored);
+            const decryptedRoundTwoParsed = JSON.parse(decryptedRoundTwo);
+
+            if(decryptedRoundTwoParsed.passwords !== undefined) {
+                logMessage({type: 'success', message: 'Passphrase is valid'});
+                setDropfile({
+                    data: decryptedRoundTwoParsed,
+                    keys: decryptedRoundOneParsed.keys
+                });
+                setAuthenticated(true);
+            }
+        } catch (e) {
+            logMessage({ type:'error', message: e.message });
+        }
+    }
 
     return (
         <Container fluid className="w-100">
@@ -65,20 +70,25 @@ export default function Authenticate() {
             </Row>
             <Row className="mt-4">
                 <Col sm={4} md={4} lg={4} xl={4} className="m-auto">
-                    {state.dropFile.fileName === null && <input
-                        {...uploader}
-                        className="form-control"
-                        id="input"
-                        disabled={disableAllInput}
-                        onChange={handleFileChange}
-                    />}
                     {
-                        state.dropFile.fileName !== null && 
-                            <Form.Control
-                                type="text"
-                                disabled
-                                value={`loaded in memory: ${state.dropFile.fileName}`}
-                            />
+                        state.dropFile.fileName !== null &&
+                        <>
+                            <Form.Label htmlFor="basic-url">Load Dropfile</Form.Label>
+                            <InputGroup className="mb-3">
+                                <InputGroup.Text
+                                    id="basic-addon3"
+                                    className="cursor-pointer file-input"
+                                    onClick={() => chooseFileClick()}
+                                >
+                                    Choose File
+                                </InputGroup.Text>
+                                <Form.Control
+                                    type="text"
+                                    disabled
+                                    value={`No file chosen`}
+                                />
+                            </InputGroup>
+                        </>
                     }
                     <Form.Group className="mb-3 mt-4" variant="dark">
                         <Form.Control
@@ -91,7 +101,7 @@ export default function Authenticate() {
                     <Row className="mt-4 text-center">
                         <Col>
                             <Button
-                                onClick={() => checkPassphrase()}
+                                onClick={() => null}
                                 variant="light"
                                 className="w-100"
                                 disabled={ passphrase === "" || disableAllInput }

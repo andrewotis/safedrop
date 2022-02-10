@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Button, Form } from "react-bootstrap";
 import {encryptAndStoreInSessionStorage, triedToPaste} from '../utilities';
-import * as dispatchers from '../state/dispatchers';
 import * as utilities from '../utilities';
 
 export default function StepOne() {

@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Container, Row, Col, Button, Form, ListGroup } from "react-bootstrap";
 import { specific } from 'react-files-hooks';
 import * as utilities from '../utilities';
-import * as dispatchers from '../state/dispatchers';
 import { useSelector } from "react-redux";
 import { initialStateDropfileData } from "../state/initialStateDropfileData";
 
