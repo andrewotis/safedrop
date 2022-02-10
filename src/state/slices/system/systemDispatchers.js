@@ -28,6 +28,7 @@ export const dismissLogMessage = msg => {
 }
 
 export const setFileHandle = fh => {
+    console.log('in the dispatcher', fh)
     store.dispatch({
         type: SET_FILE_HANDLE,
         payload: fh

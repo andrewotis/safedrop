@@ -1,25 +1,16 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Button, Form, InputGroup } from "react-bootstrap";
-import { useSelector } from "react-redux";
-import {
-    logMessage,
-    setAuthenticated,
-    setCreateStep,
-    setCurrentPage,
-    setFileHandle,
-    setLoading
-} from "../state/slices/system/systemDispatchers";
-import { Icon } from '@iconify/react';
+import { logMessage, setAuthenticated, setCreateStep, setCurrentPage, setFileHandle, setLoading } from "../state/slices/system/systemDispatchers";
 import Loading from './Loading';
-import {openExistingFileHandle, readFile} from "../filesystem-encryption/fsApiWrapper";
-import {decryptString, getSystemPassphrase, getSystemPrivateKey} from "../filesystem-encryption/openPgpUtils";
+import { openExistingFileHandle, readFile } from "../filesystem-encryption/fsApiWrapper";
+import { decryptString, getSystemPassphrase, getSystemPrivateKey } from "../filesystem-encryption/openPgpUtils";
 import { setDropfile } from "./../state/slices/dropFile/dropFileDispatchers";
 
-export default function Authenticate() {
-    const state = useSelector(state => state);
+export default function Authenticate({ fileHandle, setFileHandle }) {
     const [passphrase, setPassphrase] = useState('');
-    const [disableAllInput, setDisableAllInput] = useState(false);
-
+    const [pin, setPin] = useState('');
+    const [screen, setScreen] = useState('loadOrCreateDropfile');
+    const [filename, setFilename] = useState('');
 
     const createClick = async() => {
         setCurrentPage('CreateDropfile');
@@ -30,13 +21,16 @@ export default function Authenticate() {
         const fh = await openExistingFileHandle();
         setLoading(true);
         setFileHandle(fh);
-        const dropFileRaw = await readFile(fh);
-        const encryptedDropfile = atob(JSON.parse(dropFileRaw.contents).data);
+        setFilename(fh.name);
+        setScreen('passphrase');
         setLoading(false);
     };
 
-    const next = async() => {
+    const verifyPassphraseClick = async() => {
+        setLoading(true);
         try {
+            const dropFileRaw = await readFile(fileHandle);
+            const encryptedDropfile = atob(JSON.parse(dropFileRaw.contents).data);
             const decryptedRoundOne = await decryptString(encryptedDropfile, getSystemPassphrase(), getSystemPrivateKey());
             const decryptedRoundOneParsed = JSON.parse(decryptedRoundOne);
             const decryptedRoundTwo = await decryptString(decryptedRoundOneParsed.data, passphrase, decryptedRoundOneParsed.keys.privateKeyArmored);
@@ -53,6 +47,7 @@ export default function Authenticate() {
         } catch (e) {
             logMessage({ type:'error', message: e.message });
         }
+        setLoading(false);
     }
 
     return (
@@ -60,64 +55,92 @@ export default function Authenticate() {
             <Loading />
             <Row>
                 <Col className="w-100 text-center fs-4">
-                    Load safe
-                    <Icon
-                        icon="flat-ui:lock"
-                        width="30"
-                        style={{marginLeft: '20px', marginTop: '-15px'}}
+                    <img
+                        src="img/lockskull3.jpg"
+                        style={{
+                            height: '200px'
+                        }}
                     />
                 </Col>
             </Row>
             <Row className="mt-4">
                 <Col sm={4} md={4} lg={4} xl={4} className="m-auto">
-                    {
-                        state.dropFile.fileName !== null &&
-                        <>
-                            <Form.Label htmlFor="basic-url">Load Dropfile</Form.Label>
-                            <InputGroup className="mb-3">
-                                <InputGroup.Text
-                                    id="basic-addon3"
-                                    className="cursor-pointer file-input"
-                                    onClick={() => chooseFileClick()}
-                                >
-                                    Choose File
-                                </InputGroup.Text>
-                                <Form.Control
-                                    type="text"
-                                    disabled
-                                    value={`No file chosen`}
-                                />
-                            </InputGroup>
-                        </>
+                    { screen === "loadOrCreateDropfile" &&
+                        <Container>
+                            <Row>
+                                <Col sm={5} md={5} lg={5} xl={5} className="m-auto">
+                                    <Button
+                                        onClick={() => null}
+                                        variant="dark"
+                                        className="w-100"
+                                        onClick={() => chooseFileClick()}
+                                    >
+                                        Open Dropfile
+                                    </Button>
+                                </Col>
+                                <Col sm={1} md={1} lg={1} xl={1} className="m-auto">
+                                    or
+                                </Col>
+                                <Col sm={5} md={5} lg={5} xl={5} className="m-auto">
+                                    <Button
+                                        onClick={() => createClick()}
+                                        variant="outline-light"
+                                        className="w-100 cursor-pointer"
+                                    >
+                                        Create new
+                                    </Button>
+                                </Col>
+                            </Row>
+                        </Container>
                     }
-                    <Form.Group className="mb-3 mt-4" variant="dark">
-                        <Form.Control
-                            type="password"
-                            placeholder="Enter passpharse"
-                            disabled={disableAllInput}
-                            onChange={e => setPassphrase(e.target.value)}
-                        />
-                    </Form.Group>
-                    <Row className="mt-4 text-center">
-                        <Col>
-                            <Button
-                                onClick={() => null}
-                                variant="light"
-                                className="w-100"
-                                disabled={ passphrase === "" || disableAllInput }
-                            >
-                                Open
-                            </Button>
-                            or
-                            <Button
-                                onClick={() => createClick()}
-                                variant="outline-light"
-                                className="w-100 cursor-pointer"
-                            >
-                                Create new
-                            </Button>
-                        </Col>
-                    </Row>
+                    {
+                        screen === "passphrase" &&
+                        <Container>
+                            <Row>
+                                <Col className="text-center mb-2">
+                                    {
+                                        filename ?
+                                            `Safe: ${filename}` :
+                                                null
+                                    }
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col>
+                                    <Form.Group className="mb-3 mt-1 m-auto" variant="dark">
+                                        <Form.Control
+                                            type="password"
+                                            placeholder="Enter passphrase"
+                                            onChange={e => setPassphrase(e.target.value)}
+                                        />
+                                    </Form.Group>
+                                </Col>
+                                <Col>
+                                    <Form.Group className="mb-3 mt-1 m-auto" variant="dark">
+                                        <Form.Control
+                                            type="password"
+                                            placeholder="Enter pin"
+                                            onChange={e => setPin(e.target.value)}
+                                        />
+                                    </Form.Group>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col className="text-center">
+                                    <Button
+                                        onClick={() => null}
+                                        variant="dark"
+                                        className="m-auto"
+                                        onClick={() => verifyPassphraseClick()}
+                                        disabled={!(passphrase !== '' && pin !== '')}
+                                    >
+                                        { !(passphrase !== '' && pin !== '') && 'Please enter passphrase and pin' }
+                                        { passphrase !== '' && pin !== '' && 'Log in' }
+                                    </Button>
+                                </Col>
+                            </Row>
+                        </Container>
+                    }
                 </Col>
             </Row>
         </Container>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector } from "react-redux";
 import { Container, Alert } from 'react-bootstrap';
 import Authenticate from './Authenticate';
@@ -6,13 +6,13 @@ import CreateDropfile from "./CreateDropfile";
 import Home from "./Home";
 import { dismissLogMessage } from './../state/slices/system/systemDispatchers';
 
-
 export default function Content() {
+    const [ fileHandle, setFileHandle ] = useState(null);
     const system = useSelector(state => state.system);
     const componentMap = {
         'CreateDropfile' : <CreateDropfile />,
-        'Authenticate' : <Authenticate />,
-        'Home' : <Home />,
+        'Authenticate' : <Authenticate setFileHandle={setFileHandle} fileHandle={fileHandle} />,
+        'Home' : <Home setFileHandle={setFileHandle} fileHandle={fileHandle} />,
     }
 
     const logTypeMap = {
@@ -30,7 +30,7 @@ export default function Content() {
         <>
             <Container fluid className="dark-safe-bg">
                 <Container className="pt-4 text-light w-75 m-auto darkbg h-100">
-                    { system.log.map((alert, i) => <Alert key={i} variant={logTypeMap[alert.type]} className="m-auto w-75" onClose={() => dismissLogMessage(alert)} dismissible>{alert.message}</Alert>) }
+                    { system.log.map((alert, i) => <Alert key={i} variant={logTypeMap[alert.type]} className="m-auto w-75 mb-1" onClose={() => dismissLogMessage(alert)} dismissible>{ alert.message }</Alert>) }
                     { displayContent() }
                 </Container>
             </Container>
