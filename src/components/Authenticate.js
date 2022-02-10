@@ -43,6 +43,7 @@ export default function Authenticate({ fileHandle, setFileHandle }) {
                     keys: decryptedRoundOneParsed.keys
                 });
                 setAuthenticated(true);
+                setTimeout(() => setCurrentPage('Home'), 1000);
             }
         } catch (e) {
             logMessage({ type:'error', message: e.message });

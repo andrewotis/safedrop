@@ -7,7 +7,7 @@ export default function Home({ setPage }) {
         <Container className="">
             <Row>
                 <Col className="text-center">
-                    <img src="/safe3.png" />
+                    <img src="/img/safe3.png" />
                 </Col>
             </Row>            
         </Container>

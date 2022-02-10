@@ -6,8 +6,7 @@ import CreateDropfile from "./CreateDropfile";
 import Home from "./Home";
 import { dismissLogMessage } from './../state/slices/system/systemDispatchers';
 
-export default function Content() {
-    const [ fileHandle, setFileHandle ] = useState(null);
+export default function Content({ fileHandle, setFileHandle }) {
     const system = useSelector(state => state.system);
     const componentMap = {
         'CreateDropfile' : <CreateDropfile />,

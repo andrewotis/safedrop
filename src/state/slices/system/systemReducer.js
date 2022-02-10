@@ -10,6 +10,7 @@ const initialState = {
     log: [],
     createStep: null,
     fileHandle: null,
+    unsavedDropfile: null,
 };
   
 export default function systemReducer(state = initialState, action) {

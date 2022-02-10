@@ -13,7 +13,7 @@ export default function StepFour() {
                             Play the audio file.
                         </Form.Label>
                         <br />
-                        <img src="anonymous.jpg" style={{height:'200px', marginBottom:"20px"}}/>
+                        <img src="img/anonymous.jpg" style={{height:'200px', marginBottom:"20px"}}/>
                     </Form.Group>
                 </Col>
             </Row>

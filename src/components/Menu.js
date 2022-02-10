@@ -1,40 +1,31 @@
 import React from 'react';
 import { Navbar, Nav, NavDropdown, Container } from 'react-bootstrap';
 import { useSelector } from "react-redux";
-import { specific } from 'react-files-hooks';
 import { Icon } from '@iconify/react';
 import { setCurrentPage } from "../state/slices/system/systemDispatchers";
 
-export default function Menu() {
+export default function Menu({ fileHandle, setFileHandle }) {
     const state = useSelector(state => state);
-    const { download } = specific.useJSONDownloader();
-
-    const handleDownload = async () => {
-        download({
-            data: JSON.stringify(state.dropFile),
-            name: 'safedrop.json'
-        });
-    }
 
     return (
         <>
             <Navbar style={{background: '#0d0d0d'}} variant="dark">
                 <Container className="w-75 m-auto">
                     <Navbar.Brand>
-                        <div className={state.unsavedDropFile ? 'pulse-animation' : ''}>
+                        <div className={state.system.unsavedDropFile ? 'pulse-animation' : ''}>
                             <Icon
                                 icon="bi:shield-lock-fill"
                                 color="#335681"
                                 width="50"
-                                className={state.authenticated ? "cursor-pointer" : ""}
-                                onClick={state.authenticated ? () => handleDownload() : null}
+                                className={state.system.authenticated ? "cursor-pointer" : ""}
+                                onClick={null}
                             />
                         </div>
                     </Navbar.Brand>
                     <Navbar.Collapse id="basic-navbar-nav">
-                        <Nav fill={state.authenticated} justify={state.authenticated} className="me-auto w-100">
+                        <Nav fill={state.system.authenticated} justify={state.system.authenticated} className="me-auto w-100">
                             {
-                                !state.authenticated &&
+                                !state.system.authenticated &&
                                     <Nav.Link
                                         onClick={
                                             () => setCurrentPage('PasswordGenerator')
@@ -45,7 +36,7 @@ export default function Menu() {
                                     </Nav.Link>
                             }
                             {
-                                state.authenticated &&
+                                state.system.authenticated &&
                                     <>
                                         <NavDropdown title="Passwords" id="nav-dropdown-keys">
                                             <NavDropdown.Item
