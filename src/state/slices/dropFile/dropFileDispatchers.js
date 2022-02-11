@@ -6,8 +6,15 @@ import {
     SET_PRIVATE_KEY_USER,
     SET_PUBLIC_KEY_USER,
     SET_DROPFILE,
+    ADD_PASSWORD
 } from "./dropFileActions";
 
+export const addPassword = passwordObj => {
+    store.dispatch({
+       type: ADD_PASSWORD,
+       payload: passwordObj
+    });
+}
 export const setDropfile = dropFile => {
     store.dispatch({
         type: SET_DROPFILE,

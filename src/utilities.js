@@ -1,5 +1,4 @@
 import * as openpgp from "openpgp";
-// import { houseKeys } from './houseKeys';
 import store from './state/store';
 
 /*
@@ -38,25 +37,9 @@ export const trailingStars = (str, num) => {
 export const innerStars = (str, numExposed) => {
     // will expose numExposed characters at start and end of string
     return str.substring(0, numExposed) + stars(str.length-(numExposed * 2)) + str.substring(str.length - numExposed);
-}
+}*/
 
-export const settingsHelper = {
-    get: () => {
-        console.debug('utilities.settingsHelper.get fired');
-        const settings = sessionStorage.getItem('settings');
-        if(settings !== undefined) {
-            return JSON.parse(settings);
-        } else {
-            loadSettings(store.getState().dropFile);
-            return JSON.parse(sessionStorage.getItem('settings'));
-        }
-    },
-    set: (settings) => {
-        console.debug('utilities.settingsHelper.set fired');
-        sessionStorage.setItem('settings', JSON.stringify(settings))
-    },
-}
-
+/*
 export const clickToCopy = async (str) => {
     console.debug('utilities.clickToCopy fired');
     const settings = settingsHelper.get();
@@ -82,10 +65,7 @@ const copy30Randoms = _ => {
     }
 }
 
-export const copyToClipBoard = str => {
-    console.debug('utilities.copyToClipBoard fired');
-    navigator.clipboard.writeText(str);
-}
+
 
 export const decryptAndReturnPasswords = async (dropFile) => {
     console.debug('utilities.decryptAndReturnPasswords fired');
@@ -109,37 +89,8 @@ export const retrieveAndDecryptFromSessionStorage = async (key) => {
     return decrypted;
 }
 
-export const encryptDropFileData = async (dropFile) => {
-    console.debug('utilities.encryptDropFileData fired');
-    const encrypted = await encryptStringWithArmoredKey(JSON.stringify(dropFile.data), dropFile.keys.publicKeyArmored);
-    return encrypted;
-}
 
-export const decryptDropFileData = async (dropFile) => {
-    console.debug('utilities.decryptDropFileData fired');
-    if(dropFile === undefined) {
-        dispatchers.logMessage({type: 'error', message: 'invalid dropFile specified to decryptDropFileData method!'})
-        throw "invalid dropfile";
-    }
-    const passphrase = await decryptWithHouseKey(sessionStorage.getItem('asephrassp'));
-    const privateKey = await readPrivateKey(dropFile.keys.privateKeyArmored, passphrase);
-    const message = await readArmoredMessage(dropFile.data);
-    const decrypted = await decryptMessage(message, privateKey);
-    return JSON.parse(decrypted);
-}
 
-export const encryptWithHouseKey = async stringToEncrypt => {
-    console.debug('utilities.encryptWithHouseKey fired');
-    const encrypted = await encryptStringWithArmoredKey(stringToEncrypt, houseKeys.keys.publicKeyArmored);
-    return encrypted;
-};
-
-export const loadSettings = async (dropFile) => {
-    console.debug('utilities.loadSettings fired');
-    const decrypted = await decryptDropFileData(dropFile);
-    console.debug(decrypted);
-    settingsHelper.set(decrypted.settings);
-}
 
 export const encryptStringWithArmoredKey = async (stringToEncrypt, armoredPublicKey) => {
     console.debug('utilities.encryptStringWithArmoredKey fired');
@@ -159,28 +110,6 @@ export const decryptMessage = async (message, privateKey) => {
     return decrypted;
 }
 
-export const generateRandomPassword = passwordLength => {
-    console.debug('utilities.generateRandomPassword fired');
-    let results = '';
-    const map = settingsHelper.get().passwordGenerator.characterMap;
-    for(let n=0;n<passwordLength;n++) {
-        results += map[getRandomNumber(map.length)].char.toString();
-    }
-    return results;
-}
-
-export const getRandomNumber = max => {
-    return Math.floor(Math.random() * max);
-}
-
-export const generateKeypair = async (passphrase) => {
-    console.debug('utilities.generateKeypair fired');
-    const { privateKey, publicKey, revokationCertificate } = await openpgp.generateKey({
-        userIDs: { name: 'Safe Drop' },
-        passphrase: passphrase
-    });
-    return { privateKey, publicKey, revokationCertificate }
-};
 
 // return true or false based on passphrase validity
 export const verifyPassphrase = async (privateKeyArmored, passphrase) => {
@@ -221,8 +150,3 @@ export const decryptWithHouseKey = async (stringToDecrypt) => {
 
 }
 */
-export const triedToPaste = e => {
-    e.preventDefault();
-    alert('no pasting');
-    return false;
-}

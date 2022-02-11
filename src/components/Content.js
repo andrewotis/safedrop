@@ -4,6 +4,7 @@ import { Container, Alert } from 'react-bootstrap';
 import Authenticate from './Authenticate';
 import CreateDropfile from "./CreateDropfile";
 import Home from "./Home";
+import Passwords from './../passwords/Passwords';
 import { dismissLogMessage } from './../state/slices/system/systemDispatchers';
 
 export default function Content({ fileHandle, setFileHandle }) {
@@ -12,6 +13,7 @@ export default function Content({ fileHandle, setFileHandle }) {
         'CreateDropfile' : <CreateDropfile />,
         'Authenticate' : <Authenticate setFileHandle={setFileHandle} fileHandle={fileHandle} />,
         'Home' : <Home setFileHandle={setFileHandle} fileHandle={fileHandle} />,
+        'Passwords' : <Passwords setFileHandle={setFileHandle} fileHandle={fileHandle} />
     }
 
     const logTypeMap = {

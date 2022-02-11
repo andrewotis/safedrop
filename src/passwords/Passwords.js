@@ -1,26 +1,16 @@
-import React, {useEffect, useState, useRef} from "react";
+import React, {useState } from "react";
 import { Container, Modal, Table, Row, Col, Button, Form } from "react-bootstrap";
 import { Icon } from '@iconify/react';
 import AddPasswordModal from './AddPasswordModal';
-import * as utilities from '../utilities';
 import { useSelector } from "react-redux";
 import Loading from "../components/Loading";
+import { innerStars, stars, } from "./passwordUtils";
 
-export default function Passwords() {
+export default function Passwords({ fileHandle, setFileHandle }) {
     const state = useSelector(state => state);
-    const unMounted = useRef(false);
+    const passwords = state.dropFile.data.passwords;
     const [showModal, setShowModal] = useState(false);
-    const [passwords, setPasswords] = useState([]);
     const [usernameHover, setUsernameHover] = useState(null);
-
-    useEffect( () => {
-        handlePasswords()
-    }, [state.dropFile.data]);
-
-    const handlePasswords = async () => {
-        const passwords = await utilities.decryptAndReturnPasswords(state.dropFile);
-        setPasswords(passwords);
-    }
 
     return (
         <Container>
@@ -65,17 +55,17 @@ export default function Passwords() {
                                                 className="cursor-pointer"
                                                 onMouseEnter={e => setUsernameHover(i)}
                                                 onMouseLeave={e => setUsernameHover(null)}
-                                                onClick={() => utilities.clickToCopy(password.username)}
+                                                onClick={() => null}
                                             >
-                                                { usernameHover === i ? password.username : utilities.innerStars(password.username, 1) }
+                                                { usernameHover === i ? password.username : innerStars(password.username, 1) }
                                             </span>
                                         </td>
                                         <td>
                                             <span
-                                                onClick={() => utilities.clickToCopy(password.password)}
+                                                onClick={() => null}
                                                 className="cursor-pointer"
                                             >
-                                                { utilities.stars(password.password.length) }
+                                                { stars(password.password.length) }
                                             </span>
                                         </td>
                                         <td className="text-right">

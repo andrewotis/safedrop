@@ -8,6 +8,7 @@ export const initialStateDropfileData = {
     files: [],
     calendar: [],
     settings: {
+        postLoginDestination: 'Home',
         maskUsername: true,
         unmaskUsernameOnHover: true,
         idleTimeout: 3,

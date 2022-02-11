@@ -46,12 +46,12 @@ export const setCreateStep = step => {
     store.dispatch({
         type: SET_CREATE_STEP,
         payload: step
-    })
+    });
 }
 
 export const logMessage = msg => {
     store.dispatch({
         type: LOG_MESSAGE,
         payload: msg
-    })
+    });
 }

@@ -1,6 +1,14 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Button, Form, InputGroup } from "react-bootstrap";
-import { logMessage, setAuthenticated, setCreateStep, setCurrentPage, setFileHandle, setLoading } from "../state/slices/system/systemDispatchers";
+import {
+    dismissLogMessage,
+    logMessage,
+    setAuthenticated,
+    setCreateStep,
+    setCurrentPage,
+    setFileHandle,
+    setLoading
+} from "../state/slices/system/systemDispatchers";
 import Loading from './Loading';
 import { openExistingFileHandle, readFile } from "../filesystem-encryption/fsApiWrapper";
 import { decryptString, getSystemPassphrase, getSystemPrivateKey } from "../filesystem-encryption/openPgpUtils";
@@ -37,7 +45,11 @@ export default function Authenticate({ fileHandle, setFileHandle }) {
             const decryptedRoundTwoParsed = JSON.parse(decryptedRoundTwo);
 
             if(decryptedRoundTwoParsed.passwords !== undefined) {
-                logMessage({type: 'success', message: 'Passphrase is valid'});
+                const msgObj = {
+                    type: 'success', message: 'Passphrase is valid',
+                };
+                logMessage(msgObj);
+                setTimeout(() => dismissLogMessage(msgObj), 500);
                 setDropfile({
                     data: decryptedRoundTwoParsed,
                     keys: decryptedRoundOneParsed.keys

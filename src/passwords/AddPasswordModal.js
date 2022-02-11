@@ -2,12 +2,13 @@ import React, { useState, useRef } from "react";
 import { Container, Tooltip, OverlayTrigger, InputGroup, FormControl, Row, Col, Button, Form, Spinner, Alert, Modal } from "react-bootstrap";
 import { Icon } from '@iconify/react';
 import { useSelector } from "react-redux";
-import * as utilities from '../utilities';
 import Loading from '../components/Loading';
+import { generateRandomPassword } from "./passwordUtils";
+import { logMessage } from "../state/slices/system/systemDispatchers";
+import { addPassword } from "../state/slices/dropFile/dropFileDispatchers";
 
 export default function AddPasswordModal({ show, setShow }) {
     const state = useSelector(state => state);
-
     const [title, setTitle] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -16,9 +17,7 @@ export default function AddPasswordModal({ show, setShow }) {
     const [metaKey, setMetaKey] = useState('');
     const [metaValue, setMetaValue] = useState('');
     const [passwordInputType, setPasswordInputType] = useState('password');
-    
     const [showTooltip, setShowTooltip] = useState(null);
-    const target = useRef(null);
 
     const clearInputs = _ => {
         setTitle('');
@@ -42,37 +41,32 @@ export default function AddPasswordModal({ show, setShow }) {
     }
 
     const handleGeneratePassword = _ => {
-        const pass = utilities.generateRandomPassword(12);
+        const pass = generateRandomPassword(12);
         setPassword(pass);
         setConfirm(pass);
         setPasswordInputType('text');
         setTimeout(() => setPasswordInputType('password'), 300);
     }
 
-    const handleSavePassword = async () => {
-        if(metaKey !== '' && metaValue !== '')
-            handleAddMetaButton();
+    const handleSavePassword = async() => {
+        if(metaKey !== '' || metaValue !== '') {
+            console.log(metas)
+            setMetas([...metas, { key: metaKey, val: metaValue }]);
+        }
 
         if(password !== confirm) {
-            dispatchers.logMessage({type: 'error', message: 'Passwords do not match!'});
+            logMessage({type: 'error', message: 'Passwords do not match!'});
             return false;
         }
-        console.debug('saving password. calling utilities.addPassword with');
-        console.debug('state.dropFile', state.dropFile);
-        console.debug('passwordObject', {
+
+        const passwordObject = {
             title: title,
             username: username,
             password: password,
             metas: metas
-        });
+        };
 
-        await utilities.addPassword(state.dropFile, {
-            title: title,
-            username: username,
-            password: password,
-            metas: metas
-        });
-
+        await addPassword(passwordObject);
         clearInputs();
         setShow(false);
     }

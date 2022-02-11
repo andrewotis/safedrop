@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { createNewFileHandle, writeFile } from "../filesystem-encryption/fsApiWrapper";
-import { triedToPaste } from "../utilities";
+import { triedToPaste } from "./../state/slices/system/systemUtils";
 import { generateKeypair } from "../filesystem-encryption/openPgpWrapper";
 import { encryptString, getSystemPublicKey } from './../filesystem-encryption/openPgpUtils';
 import { initialStateDropfileData } from './../state/initialStateDropfileData';

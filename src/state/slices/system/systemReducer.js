@@ -36,11 +36,6 @@ export default function systemReducer(state = initialState, action) {
         case SET_CURRENT_PAGE:
             newState.currentPage = action.payload;
             return newState;
-        case SET_FILE_HANDLE:
-            newState.fileHandle = action.payload;
-            return newState;
-        case GET_FILE_HANDLE:
-            return newState.fileHandle;
         case UPDATE_PASSWORD:
         case REMOVE_PASSWORD:
         case ADD_PASSWORD:

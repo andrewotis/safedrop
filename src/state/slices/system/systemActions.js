@@ -13,5 +13,3 @@ export const UPDATE_NOTE = 'UPDATE_NOTE';
 export const REMOVE_PASSWORD = 'REMOVE_PASSWORD';
 export const ADD_NOTE = 'ADD_NOTE';
 export const REMOVE_NOTE = 'REMOVE_NOTE';
-export const SET_FILE_HANDLE = 'SET_FILE_HANDLE';
-export const GET_FILE_HANDLE = 'GET_FILE_HANDLE';
