@@ -1,13 +1,20 @@
 import store from "../../store";
 import {
     SET_PRIVATE_KEY_SYSTEM, SET_PUBLIC_KEY_SYSTEM, SET_PRIVATE_KEY_USER, SET_PUBLIC_KEY_USER,
-    SET_DROPFILE, ADD_PASSWORD, ADD_CATEGORY, DELETE_CATEGORY, DELETE_PASSWORD,
+    SET_DROPFILE, ADD_PASSWORD, ADD_CATEGORY, DELETE_CATEGORY, DELETE_PASSWORD,UPDATE_SETTING,
 } from "./dropFileActions";
 
 export const addPassword = passwordObj => {
     store.dispatch({
         type: ADD_PASSWORD,
         payload: passwordObj
+    });
+}
+
+export const updateSetting = setting => { // setting object should look like { setting: 'setting_to_change', value: tochangeitto }
+    store.dispatch({
+        type: UPDATE_SETTING,
+        payload: setting
     });
 }
 

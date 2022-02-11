@@ -4,7 +4,7 @@ import {
     SET_PUBLIC_KEY_USER,
     SET_DROPFILE,
     ADD_PASSWORD,
-    ADD_CATEGORY, DELETE_CATEGORY, DELETE_PASSWORD,
+    ADD_CATEGORY, DELETE_CATEGORY, DELETE_PASSWORD, UPDATE_SETTING,
 } from "./dropFileActions";
 
 const initialState = {
@@ -28,6 +28,9 @@ export default function dropFileReducer(state = initialState, action) {
             newState.data.passwords = newState.data.passwords.filter(password => {
                 return password.username !== action.payload.username;
             })
+            return newState;
+        case UPDATE_SETTING:
+            newState.data.settings[action.payload.setting] = action.payload.value;
             return newState;
         case SET_DROPFILE:
             newState = action.payload;
