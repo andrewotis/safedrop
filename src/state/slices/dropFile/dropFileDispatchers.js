@@ -1,18 +1,20 @@
 import store from "../../store";
-
 import {
-    SET_PRIVATE_KEY_SYSTEM,
-    SET_PUBLIC_KEY_SYSTEM,
-    SET_PRIVATE_KEY_USER,
-    SET_PUBLIC_KEY_USER,
-    SET_DROPFILE,
-    ADD_PASSWORD, ADD_CATEGORY, DELETE_CATEGORY,
+    SET_PRIVATE_KEY_SYSTEM, SET_PUBLIC_KEY_SYSTEM, SET_PRIVATE_KEY_USER, SET_PUBLIC_KEY_USER,
+    SET_DROPFILE, ADD_PASSWORD, ADD_CATEGORY, DELETE_CATEGORY, DELETE_PASSWORD,
 } from "./dropFileActions";
 
 export const addPassword = passwordObj => {
     store.dispatch({
-       type: ADD_PASSWORD,
-       payload: passwordObj
+        type: ADD_PASSWORD,
+        payload: passwordObj
+    });
+}
+
+export const deletePassword = passwordObj => {
+    store.dispatch({
+        type: DELETE_PASSWORD,
+        payload: passwordObj
     });
 }
 
@@ -29,9 +31,6 @@ export const deleteCategory = category => {
         payload: category
     });
 }
-
-
-
 
 export const setDropfile = dropFile => {
     store.dispatch({

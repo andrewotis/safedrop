@@ -62,7 +62,9 @@ export default function Menu({ fileHandle, setFileHandle }) {
                                             <NavDropdown.Item disabled href="#">Import</NavDropdown.Item>
                                             <NavDropdown.Item disabled href="#">Export</NavDropdown.Item>
                                         </NavDropdown>
-                                        <Icon icon="ci:settings-filled" className="color2" width="40" style={{float: 'right'}} />
+                                        <Icon icon="ci:settings-filled" onClick={
+                                            () => setCurrentPage('Settings')
+                                        } className="color2 cursor-pointer" width="40" style={{float: 'right'}} />
                                     </>
                             }
                         </Nav>

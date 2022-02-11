@@ -141,11 +141,11 @@ export default function Authenticate({ fileHandle, setFileHandle }) {
                             <Row>
                                 <Col className="text-center">
                                     <Button
-                                        onClick={() => null}
+                                        onClick={ () => null }
                                         variant="dark"
                                         className="m-auto"
-                                        onClick={() => verifyPassphraseClick()}
-                                        disabled={!(passphrase !== '' && pin !== '')}
+                                        onClick={ () => verifyPassphraseClick() }
+                                        disabled={ !(passphrase !== '' && pin !== '') }
                                     >
                                         { !(passphrase !== '' && pin !== '') && 'Please enter passphrase and pin' }
                                         { passphrase !== '' && pin !== '' && 'Log in' }

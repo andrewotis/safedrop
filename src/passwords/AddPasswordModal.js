@@ -130,7 +130,7 @@ export default function AddPasswordModal({ show, setShow, fileHandle, setFileHan
                             value={title}
                         />
                     </InputGroup>
-                    <InputGroup className="mb-3 w-100" size="sm">
+                    <InputGroup className="mb-3 w-100 add-password-category-parent" size="sm" >
                         <InputGroup.Text
                             style={{width:'90px'}}
                         >
@@ -139,11 +139,10 @@ export default function AddPasswordModal({ show, setShow, fileHandle, setFileHan
                         <DropdownButton
                             title={category === '' ? "Select a category" : category}
                             variant="light"
-                            className="w-75"
+                            className="ucker"
                         >
                             {
-                                state.dropFile.data.settings.passwordCategories.map((category, i) => <Dropdown.Item key={i}>{category}</Dropdown.Item>)
-
+                                state.dropFile.data.settings.passwordCategories.map((category, i) => <Dropdown.Item key={i} onClick={() => setCategory(category)}>{category}</Dropdown.Item>)
                             }
                         </DropdownButton>
                     </InputGroup>

@@ -5,8 +5,8 @@ import AddPasswordModal from './AddPasswordModal';
 import { useSelector } from "react-redux";
 import Loading from "../components/Loading";
 import { innerStars, stars, } from "./passwordUtils";
-import {addCategory, deleteCategory} from "../state/slices/dropFile/dropFileDispatchers";
-import {saveDropfile} from "../state/slices/dropFile/dropFileUtils";
+import { addCategory, deleteCategory, deletePassword } from "../state/slices/dropFile/dropFileDispatchers";
+import { saveDropfile } from "../state/slices/dropFile/dropFileUtils";
 
 export default function Passwords({ fileHandle, setFileHandle }) {
     const state = useSelector(state => state);
@@ -27,6 +27,11 @@ export default function Passwords({ fileHandle, setFileHandle }) {
 
     const handleCategoryDelete = async(category) => {
         deleteCategory(category);
+        await saveDropfile(fileHandle);
+    }
+
+    const handlePasswordDelete = async(password) => {
+        deletePassword(password);
         await saveDropfile(fileHandle);
     }
 
@@ -167,6 +172,7 @@ export default function Passwords({ fileHandle, setFileHandle }) {
                                                 color="white"
                                                 width="24"
                                                 className="cursor-pointer"
+                                                onClick={() => handlePasswordDelete(password)}
                                                 style={{marginLeft: '5px'}}
                                             />
                                         </td>

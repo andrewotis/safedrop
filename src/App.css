@@ -78,6 +78,10 @@
     background-color: #a7a8a8 !important;
     border: 1px solid #ced4da !important;
 }
+
+.add-password-category-parent > button  {
+    width: 80%;
+}
 /* 
 #7fa2cc
 #436ea3
