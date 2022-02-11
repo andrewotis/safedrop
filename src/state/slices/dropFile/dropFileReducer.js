@@ -1,11 +1,10 @@
 import {initialStateDropfileData} from "../../initialStateDropfileData";
 import {
-    SET_PRIVATE_KEY_SYSTEM,
-    SET_PUBLIC_KEY_SYSTEM,
     SET_PRIVATE_KEY_USER,
     SET_PUBLIC_KEY_USER,
     SET_DROPFILE,
     ADD_PASSWORD,
+    ADD_CATEGORY, DELETE_CATEGORY,
 } from "./dropFileActions";
 
 const initialState = {
@@ -34,6 +33,12 @@ export default function dropFileReducer(state = initialState, action) {
         case SET_PUBLIC_KEY_USER:
             newState.keys.publicKeyArmored = action.payload;
             return newState;
+        case ADD_CATEGORY:
+            newState.data.settings.passwordCategories = [...newState.data.settings.passwordCategories, action.payload];
+            return newState;
+        case DELETE_CATEGORY:
+            newState.data.settings.passwordCategories = newState.data.settings.passwordCategories.filter(category => category !== action.payload);
+            return newState
         default:
             return newState;
     }

@@ -9,10 +9,12 @@ export const initialStateDropfileData = {
     calendar: [],
     settings: {
         postLoginDestination: 'Home',
+        autoSaveDropFile: true,
         maskUsername: true,
         unmaskUsernameOnHover: true,
         idleTimeout: 3,
         clipboardEraseTimer: 10,
+        passwordCategories: [],
         passwordGenerator: {
             preferredLength: 12,
             noRepeatingChars: false,

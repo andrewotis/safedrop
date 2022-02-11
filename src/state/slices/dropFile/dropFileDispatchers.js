@@ -6,7 +6,7 @@ import {
     SET_PRIVATE_KEY_USER,
     SET_PUBLIC_KEY_USER,
     SET_DROPFILE,
-    ADD_PASSWORD
+    ADD_PASSWORD, ADD_CATEGORY, DELETE_CATEGORY,
 } from "./dropFileActions";
 
 export const addPassword = passwordObj => {
@@ -15,6 +15,24 @@ export const addPassword = passwordObj => {
        payload: passwordObj
     });
 }
+
+export const addCategory = category => {
+    store.dispatch({
+        type: ADD_CATEGORY,
+        payload: category
+    });
+}
+
+export const deleteCategory = category => {
+    store.dispatch({
+        type: DELETE_CATEGORY,
+        payload: category
+    });
+}
+
+
+
+
 export const setDropfile = dropFile => {
     store.dispatch({
         type: SET_DROPFILE,

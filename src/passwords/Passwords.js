@@ -1,26 +1,88 @@
 import React, {useState } from "react";
-import { Container, Modal, Table, Row, Col, Button, Form } from "react-bootstrap";
+import {Container, Modal, Table, Row, Col, Button, Form, Dropdown, InputGroup} from "react-bootstrap";
 import { Icon } from '@iconify/react';
 import AddPasswordModal from './AddPasswordModal';
 import { useSelector } from "react-redux";
 import Loading from "../components/Loading";
 import { innerStars, stars, } from "./passwordUtils";
+import {addCategory, deleteCategory} from "../state/slices/dropFile/dropFileDispatchers";
+import {saveDropfile} from "../state/slices/dropFile/dropFileUtils";
 
 export default function Passwords({ fileHandle, setFileHandle }) {
     const state = useSelector(state => state);
     const passwords = state.dropFile.data.passwords;
     const [showModal, setShowModal] = useState(false);
     const [usernameHover, setUsernameHover] = useState(null);
+    const [filterQuery, setFilterQuery] = useState('');
+    const [addCategoryActive, setAddCategoryActive] = useState(false);
+    const [newCategory, setNewCategory] = useState('');
+
+    const handleCategoryAdd = async() => {
+        if(newCategory !== '') {
+            addCategory(newCategory);
+            setNewCategory('');
+            await saveDropfile(fileHandle);
+        }
+    }
+
+    const handleCategoryDelete = async(category) => {
+        deleteCategory(category);
+        await saveDropfile(fileHandle);
+    }
 
     return (
         <Container>
             <Loading />
             <Row className="mb-4">
-                <Col sm="3" md="3" lg="3" xl="3">
-                    <Form.Control size="sm" type="text" placeholder="Filter data..." />
+                <Col sm="2" md="2" lg="2" xl="2">
+                    <Form.Control
+                        size="sm"
+                        type="text"
+                        placeholder="Filter data..."
+                        value={ filterQuery }
+                        onChange={e => setFilterQuery(e.target.value)}
+                    />
                 </Col>
                 <Col sm="6" md="6" lg="6" xl="6" />
-                <Col className="text-right" sm="3" md="3" lg="3" xl="3">
+                <Col sm="2" md="2" lg="2" xl="2">
+                    <Dropdown autoClose="outside">
+                        <Dropdown.Toggle
+                            size="sm"
+                            id="dropdown-button-dark-example1"
+                            className="w-100"
+                            variant="outline-light"
+                        >
+                            Categories
+                        </Dropdown.Toggle>
+                        <Dropdown.Menu variant="light" className="w-100">
+                            <Dropdown.Item onClick={() => setAddCategoryActive(!addCategoryActive)} >Add Category</Dropdown.Item>
+                            { addCategoryActive &&
+                                <Dropdown.Item>
+                                    <InputGroup size="sm" className="mb-3">
+                                        <Form.Control
+                                            size="sm"
+                                            type="text"
+                                            placeholder="Add category..."
+                                            value={ newCategory }
+                                            onChange={e => setNewCategory(e.target.value)}
+                                        />
+                                        <InputGroup.Text
+                                            onClick={() => handleCategoryAdd()}
+                                        >
+                                            add
+                                        </InputGroup.Text>
+                                    </InputGroup>
+                                </Dropdown.Item>
+                            }
+                            <Dropdown.Divider />
+                            {
+                                state.dropFile.data.settings.passwordCategories
+                                    .map((category, index) => <Dropdown.Item key={index} href="#/action-4">{category} <span onClick={() => handleCategoryDelete(category)} style={{float: 'right'}}>X</span></Dropdown.Item>)
+                            }
+                        </Dropdown.Menu>
+                    </Dropdown>
+                </Col>
+                <Col className="text-right" sm="2" md="2" lg="2" xl="2">
                     <Button  
                         variant="secondary"
                         size="sm"
@@ -44,7 +106,17 @@ export default function Passwords({ fileHandle, setFileHandle }) {
                         </thead>
                         <tbody>
                         {
-                            passwords.map((password, i) => {
+                            passwords.filter(item => {
+                                if(filterQuery === '') {
+                                    return true;
+                                } else if(filterQuery !== '' && item.title.toLowerCase().includes(filterQuery.toLowerCase())) {
+                                    return true;
+                                } else if(filterQuery !== '' && item.username.toLowerCase().includes(filterQuery.toLowerCase())) {
+                                    return true;
+                                } else {
+                                    return false;
+                                }
+                            }).map((password, i) => {
                                 return (
                                     <tr key={i}>
                                         <td>
@@ -109,6 +181,8 @@ export default function Passwords({ fileHandle, setFileHandle }) {
             <AddPasswordModal 
                 show={showModal} 
                 setShow={(v) => setShowModal(v)}
+                fileHandle={fileHandle}
+                setFileHandle={setFileHandle}
             />
         </Container>  
     );

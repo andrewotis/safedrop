@@ -1,18 +1,35 @@
 import React, { useState, useRef } from "react";
-import { Container, Tooltip, OverlayTrigger, InputGroup, FormControl, Row, Col, Button, Form, Spinner, Alert, Modal } from "react-bootstrap";
+import {
+    Container,
+    Tooltip,
+    OverlayTrigger,
+    InputGroup,
+    FormControl,
+    Row,
+    Col,
+    Button,
+    Form,
+    Spinner,
+    Alert,
+    Modal,
+    DropdownButton,
+    Dropdown
+} from "react-bootstrap";
 import { Icon } from '@iconify/react';
 import { useSelector } from "react-redux";
 import Loading from '../components/Loading';
 import { generateRandomPassword } from "./passwordUtils";
 import { logMessage } from "../state/slices/system/systemDispatchers";
 import { addPassword } from "../state/slices/dropFile/dropFileDispatchers";
+import {saveDropfile} from "../state/slices/dropFile/dropFileUtils";
 
-export default function AddPasswordModal({ show, setShow }) {
+export default function AddPasswordModal({ show, setShow, fileHandle, setFileHandle }) {
     const state = useSelector(state => state);
     const [title, setTitle] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [confirm, setConfirm] = useState('');
+    const [category, setCategory] = useState('');
     const [metas, setMetas] = useState([]);
     const [metaKey, setMetaKey] = useState('');
     const [metaValue, setMetaValue] = useState('');
@@ -61,8 +78,6 @@ export default function AddPasswordModal({ show, setShow }) {
             return false;
         }
 
-
-
         const passwordObject = {
             title: title,
             username: username,
@@ -71,8 +86,14 @@ export default function AddPasswordModal({ show, setShow }) {
         };
 
         await addPassword(passwordObject);
+        saveDropfile(fileHandle);
         clearInputs();
         setShow(false);
+    }
+
+    const handleAddCategoryButton = _ => {
+        setMetaKey('Category');
+        setMetaValue('');
     }
 
     return (
@@ -108,6 +129,23 @@ export default function AddPasswordModal({ show, setShow }) {
                             onChange={e => setTitle(e.target.value)}
                             value={title}
                         />
+                    </InputGroup>
+                    <InputGroup className="mb-3 w-100" size="sm">
+                        <InputGroup.Text
+                            style={{width:'90px'}}
+                        >
+                            Category
+                        </InputGroup.Text>
+                        <DropdownButton
+                            title={category === '' ? "Select a category" : category}
+                            variant="light"
+                            className="w-75"
+                        >
+                            {
+                                state.dropFile.data.settings.passwordCategories.map((category, i) => <Dropdown.Item key={i}>{category}</Dropdown.Item>)
+
+                            }
+                        </DropdownButton>
                     </InputGroup>
                     <InputGroup className="mb-3" size="sm">
                         <InputGroup.Text
@@ -195,14 +233,24 @@ export default function AddPasswordModal({ show, setShow }) {
                             />
                         </InputGroup>
                     <Row>
-                        <Col xs="3" md="3" lg="3" xl="3">
+                        <Col xs="4" md="4" lg="4" xl="4">
                             <Button 
                                 variant="secondary" 
-                                size="sm" 
-                                style={{width:'90px'}}
+                                size="sm"
                                 onClick={() => handleAddMetaButton()}
+                                className="w-100"
                             >
                                 Add Meta
+                            </Button>
+                        </Col>
+                        <Col xs="4" md="4" lg="4" xl="4">
+                            <Button
+                                variant="outline-light"
+                                size="sm"
+                                onClick={() => handleAddCategoryButton()}
+                                className="w-100"
+                            >
+                                Add Category
                             </Button>
                         </Col>
                         <Col className="fs-8">
@@ -214,7 +262,7 @@ export default function AddPasswordModal({ show, setShow }) {
                                             <p>Meta can be added for anything related to this item you wish to store.</p>
                                             <p>Examples: login URLs, onionsite mirrors, wallet seeds, etc.</p>
                                             <p>Add as many meta entries as you wish. Also note that certain meta keys will have special consequences in the application. Setting a meta record with a valid URL and a keyword of "link" will create a hyperlink on the passwords listing that you can click to go to the site.</p>
-                                            <p>For something more versitile, check out Notes.</p>
+                                            <p>For something more versatile, check out Notes.</p>
                                         </div>
                                     </Tooltip>
                                 }
@@ -222,6 +270,7 @@ export default function AddPasswordModal({ show, setShow }) {
                                 <Icon icon="bi:question-square" color="white" width="32" />
                             </OverlayTrigger>
                         </Col>
+
                     </Row>                    
                 </Modal.Body>
                 <Modal.Footer className="text-secondary bg-black">
