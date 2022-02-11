@@ -3,7 +3,7 @@ import {
     SET_LOADING,
     DISMISS_LOG_MESSAGE,
     SET_CURRENT_PAGE,
-    SET_CREATE_STEP, LOG_MESSAGE, SET_FILE_HANDLE, SET_AUTHENTICATED,
+    SET_CREATE_STEP, LOG_MESSAGE, SET_AUTHENTICATED,
 } from "./systemActions";
 
 export const setLoading = status => {
@@ -25,14 +25,6 @@ export const dismissLogMessage = msg => {
         type: DISMISS_LOG_MESSAGE,
         payload: msg
     })
-}
-
-export const setFileHandle = fh => {
-    console.log('in the dispatcher', fh)
-    store.dispatch({
-        type: SET_FILE_HANDLE,
-        payload: fh
-    });
 }
 
 export const setCurrentPage = page => {

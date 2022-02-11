@@ -49,9 +49,11 @@ export default function AddPasswordModal({ show, setShow }) {
     }
 
     const handleSavePassword = async() => {
+        let localMetas;
         if(metaKey !== '' || metaValue !== '') {
-            console.log(metas)
-            setMetas([...metas, { key: metaKey, val: metaValue }]);
+            localMetas = [...metas, { key: metaKey, val: metaValue }];
+            console.log(localMetas)
+            setMetas(localMetas);
         }
 
         if(password !== confirm) {
@@ -59,11 +61,13 @@ export default function AddPasswordModal({ show, setShow }) {
             return false;
         }
 
+
+
         const passwordObject = {
             title: title,
             username: username,
             password: password,
-            metas: metas
+            metas: localMetas
         };
 
         await addPassword(passwordObject);
