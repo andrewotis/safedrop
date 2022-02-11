@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import { Container, Row, Col, Button, Form, InputGroup } from "react-bootstrap";
+import { Container, Row, Col, Button, Form } from "react-bootstrap";
 import {
     dismissLogMessage,
     logMessage,
     setAuthenticated,
     setCreateStep,
     setCurrentPage,
-    setFileHandle,
     setLoading
 } from "../state/slices/system/systemDispatchers";
 import Loading from './Loading';
@@ -70,6 +69,7 @@ export default function Authenticate({ fileHandle, setFileHandle }) {
                 <Col className="w-100 text-center fs-4">
                     <img
                         src="img/lockskull3.jpg"
+                        alt=""
                         style={{
                             height: '200px'
                         }}

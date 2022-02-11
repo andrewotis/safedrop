@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { Container, Table, Row, Col, Button, Form, Spinner, Alert } from "react-bootstrap";
+import React from "react";
+import { Container, Row, Col } from "react-bootstrap";
 
-export default function Home({ setPage }) {
+export default function Home({  }) {
 
     return (
         <Container className="">
