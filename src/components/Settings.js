@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-import {Container, Row, Col, Button, Form, InputGroup, DropdownButton, Dropdown, FormControl} from "react-bootstrap";
+import { Container, Row, Col, Button, Form, InputGroup, DropdownButton, Dropdown, FormControl } from "react-bootstrap";
 import Loading from './Loading';
 import { useSelector } from "react-redux";
 import { updateSetting } from './../state/slices/dropFile/dropFileDispatchers';
-import {saveDropfile} from "../state/slices/dropFile/dropFileUtils";
+import { saveDropfile } from "../state/slices/dropFile/dropFileUtils";
+import { resetPrivateKeyPassphrase } from "../filesystem-encryption/openPgpWrapper";
+import {setCurrentPage} from "../state/slices/system/systemDispatchers";
 
 export default function Settings({ fileHandle, setFileHandle }) {
     const state = useSelector(state => state);
@@ -13,6 +15,7 @@ export default function Settings({ fileHandle, setFileHandle }) {
         updateSetting(setting);
         saveDropfile(fileHandle);
     }
+
 
     return (
         <Container fluid className="w-75">
@@ -27,7 +30,13 @@ export default function Settings({ fileHandle, setFileHandle }) {
                     <Dropdown>
                         <Dropdown.Toggle size="sm" id="dropdown-button-dark-example1" variant="outline-light">Actions</Dropdown.Toggle>
                         <Dropdown.Menu variant="dark">
-                            <Dropdown.Item onClick={() => saveDropfile(fileHandle)}>Save Dropfile</Dropdown.Item>
+                            <Dropdown.Item onClick={() => saveDropfile(fileHandle, 'action')}>Save Dropfile</Dropdown.Item>
+                            <Dropdown.Item onClick={() => setCurrentPage('ChangePassphrase')}>Change Dropfile Passphrase</Dropdown.Item>
+                            {/*  ^^^ for changing passphrase, just decrypt a private key, then encrypt it with another passphrase
+                                                    https://docs.openpgpjs.org/global.html#encryptKey
+                                1: get a new passphrase, and confirm it
+                                2: store the new passp
+                            */}
                         </Dropdown.Menu>
                     </Dropdown>
                 </Col>

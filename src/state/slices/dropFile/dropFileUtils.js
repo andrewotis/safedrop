@@ -2,10 +2,10 @@ import { encryptString, getSystemPublicKey } from "../../../filesystem-encryptio
 import { writeFile } from "./../../../filesystem-encryption/fsApiWrapper";
 import store from "../../store";
 
-export const saveDropfile = async(fh) => {
+export const saveDropfile = async(fh, source = null) => {
     const state = store.getState();
 
-    if(state.dropFile.data.settings.autoSaveDropFile === true) {
+    if(state.dropFile.data.settings.autoSaveDropFile === true || source === 'action') {
         const dropfile = {
             data: await encryptString(JSON.stringify(state.dropFile.data), state.dropFile.keys.publicKeyArmored),
             keys: {

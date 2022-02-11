@@ -49,29 +49,25 @@ export default function CreateDropfile() {
             <Row>
                 <Col sm={4} md={4} lg={4} xl={4} className="m-auto">
                     <Form.Group className="mb-3" >
-                        <Form.Label>
-                            Passphrase
-                        </Form.Label>
+                        <Form.Label>Passphrase</Form.Label>
                         <Form.Control
                             size="sm"
                             type="password"
-                            value={passphrase}
+                            value={ passphrase }
                             placeholder="Enter passphrase"
                             onChange={ e => setPassphrase(e.target.value) }
-                            onPaste={() => triedToPaste()}
+                            onPaste={ () => triedToPaste() }
                         />
                     </Form.Group>
                     <Form.Group className="mb-3" >
-                        <Form.Label>
-                            Confirm Passphrase
-                        </Form.Label>
+                        <Form.Label>Confirm Passphrase</Form.Label>
                         <Form.Control
                             size="sm"
                             type="password"
-                            value={confirmPassphrase}
+                            value={ confirmPassphrase }
                             placeholder="Enter passphrase again"
                             onChange={ e => setConfirmPassphrase(e.target.value) }
-                            onPaste={() => triedToPaste()}
+                            onPaste={ () => triedToPaste() }
                         />
                     </Form.Group>
                     <Form.Group className={passphrase !== '' && confirmPassphrase !== '' && passphrase === confirmPassphrase ? `mb-4` : "mb-4 d-none"}>

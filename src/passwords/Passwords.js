@@ -7,6 +7,7 @@ import Loading from "../components/Loading";
 import { innerStars, stars, } from "./passwordUtils";
 import { addCategory, deleteCategory, deletePassword } from "../state/slices/dropFile/dropFileDispatchers";
 import { saveDropfile } from "../state/slices/dropFile/dropFileUtils";
+import {copyToClipBoard} from "../state/slices/system/systemUtils";
 
 export default function Passwords({ fileHandle, setFileHandle }) {
     const state = useSelector(state => state);
@@ -132,14 +133,14 @@ export default function Passwords({ fileHandle, setFileHandle }) {
                                                 className="cursor-pointer"
                                                 onMouseEnter={e => setUsernameHover(i)}
                                                 onMouseLeave={e => setUsernameHover(null)}
-                                                onClick={() => null}
+                                                onClick={() => copyToClipBoard(password.username)}
                                             >
                                                 { usernameHover === i ? password.username : innerStars(password.username, 1) }
                                             </span>
                                         </td>
                                         <td>
                                             <span
-                                                onClick={() => null}
+                                                onClick={() => copyToClipBoard(password.password)}
                                                 className="cursor-pointer"
                                             >
                                                 { stars(password.password.length) }

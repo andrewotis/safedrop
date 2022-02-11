@@ -1,5 +1,6 @@
 import * as openpgp from 'openpgp';
 import {logMessage} from "../state/slices/system/systemDispatchers";
+import {decryptKey} from "openpgp";
 
 export const generateKeypair = async (passphrase, username = 'Safe Drop') => {
     const { privateKey, publicKey, revocationCertificate } = await openpgp.generateKey({
@@ -18,6 +19,20 @@ export const readArmoredMessage = async (armoredString) => {
     return encryptedMessage;
 }
 
+export const resetPrivateKeyPassphrase = async (privateKeyArmored, oldPassphrase, newPassphrase) => {
+    const privateKey = await readPrivateKey(privateKeyArmored, oldPassphrase);
+    let encryptedWithNewPassphrase;
+    try {
+        encryptedWithNewPassphrase = await openpgp.encryptKey({
+            privateKey: privateKey,
+            passphrase: newPassphrase
+        })
+    } catch(e) {
+        logMessage({type:'error',message: e.message});
+    }
+    return encryptedWithNewPassphrase;
+}
+
 export const readPrivateKey = async (privateKeyArmored, passphrase) => {
     let privateKey = false;
     try {
@@ -26,7 +41,7 @@ export const readPrivateKey = async (privateKeyArmored, passphrase) => {
             passphrase
         });
     } catch (error) {
-        logMessage({ type: 'error', message: error.message })
+        logMessage({ type: 'error', message: error.message });
     }
     return privateKey;
 }
