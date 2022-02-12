@@ -1,15 +1,14 @@
-import React, { useState } from "react";
-import { Container, Row, Col, Button, Form, InputGroup, DropdownButton, Dropdown, FormControl } from "react-bootstrap";
+import React from "react";
+import { Container, Row, Col, InputGroup, DropdownButton, Dropdown, FormControl } from "react-bootstrap";
 import Loading from './Loading';
 import { useSelector } from "react-redux";
 import { updateSetting } from './../state/slices/dropFile/dropFileDispatchers';
 import { saveDropfile } from "../state/slices/dropFile/dropFileUtils";
-import { resetPrivateKeyPassphrase } from "../filesystem-encryption/openPgpWrapper";
+// import { resetPrivateKeyPassphrase } from "../filesystem-encryption/openPgpWrapper";
 import {setCurrentPage} from "../state/slices/system/systemDispatchers";
 
 export default function Settings({ fileHandle, setFileHandle }) {
     const state = useSelector(state => state);
-    const [loading, setLoading] = useState(false);
 
     const handleUpdateSetting = setting => {
         updateSetting(setting);
@@ -61,7 +60,7 @@ export default function Settings({ fileHandle, setFileHandle }) {
                             className="form-check-input"
                             type="checkbox"
                             checked={state.dropFile.data.settings.autoSaveDropFile}
-                            onClick={() => handleUpdateSetting({
+                            onChange={() => handleUpdateSetting({
                                 setting: 'autoSaveDropFile',
                                 value: !state.dropFile.data.settings.autoSaveDropFile
                             })}
@@ -75,7 +74,7 @@ export default function Settings({ fileHandle, setFileHandle }) {
                             className="form-check-input"
                             type="checkbox"
                             checked={state.dropFile.data.settings.maskUsername}
-                            onClick={() => handleUpdateSetting({
+                            onChange={() => handleUpdateSetting({
                                 setting: 'maskUsername',
                                 value: !state.dropFile.data.settings.maskUsername
                             })}
@@ -89,7 +88,7 @@ export default function Settings({ fileHandle, setFileHandle }) {
                             className="form-check-input"
                             type="checkbox"
                             checked={state.dropFile.data.settings.unmaskUsernameOnHover}
-                            onClick={() => handleUpdateSetting({
+                            onChange={() => handleUpdateSetting({
                                 setting: 'unmaskUsernameOnHover',
                                 value: !state.dropFile.data.settings.unmaskUsernameOnHover
                             })}

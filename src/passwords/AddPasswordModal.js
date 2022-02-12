@@ -1,20 +1,5 @@
-import React, { useState, useRef } from "react";
-import {
-    Container,
-    Tooltip,
-    OverlayTrigger,
-    InputGroup,
-    FormControl,
-    Row,
-    Col,
-    Button,
-    Form,
-    Spinner,
-    Alert,
-    Modal,
-    DropdownButton,
-    Dropdown
-} from "react-bootstrap";
+import React, { useState } from "react";
+import { Tooltip, OverlayTrigger, InputGroup, FormControl, Row, Col, Button, Modal, DropdownButton, Dropdown } from "react-bootstrap";
 import { Icon } from '@iconify/react';
 import { useSelector } from "react-redux";
 import Loading from '../components/Loading';
@@ -34,7 +19,6 @@ export default function AddPasswordModal({ show, setShow, fileHandle, setFileHan
     const [metaKey, setMetaKey] = useState('');
     const [metaValue, setMetaValue] = useState('');
     const [passwordInputType, setPasswordInputType] = useState('password');
-    const [showTooltip, setShowTooltip] = useState(null);
 
     const clearInputs = _ => {
         setTitle('');

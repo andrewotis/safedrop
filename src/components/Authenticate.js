@@ -44,17 +44,24 @@ export default function Authenticate({ fileHandle, setFileHandle }) {
             const decryptedRoundTwoParsed = JSON.parse(decryptedRoundTwo);
 
             if(decryptedRoundTwoParsed.passwords !== undefined) {
-                const msgObj = {
-                    type: 'success', message: 'Passphrase is valid',
-                };
-                logMessage(msgObj);
-                setTimeout(() => dismissLogMessage(msgObj), 500);
-                setDropfile({
-                    data: decryptedRoundTwoParsed,
-                    keys: decryptedRoundOneParsed.keys
-                });
-                setAuthenticated(true);
-                setTimeout(() => setCurrentPage('Home'), 1000);
+                if(decryptedRoundTwoParsed.settings.pin === pin) {
+                    const msgObj = {
+                        type: 'success', message: 'Passphrase is valid',
+                    };
+                    logMessage(msgObj);
+                    setTimeout(() => dismissLogMessage(msgObj), 1000);
+                    setDropfile({
+                        data: decryptedRoundTwoParsed,
+                        keys: decryptedRoundOneParsed.keys
+                    });
+                    setAuthenticated(true);
+                    setTimeout(() => setCurrentPage('Home'), 1000);
+                } else {
+                    const msgObj = {
+                        type: 'error', message: 'Passphrase or pin was valid',
+                    };
+                    logMessage(msgObj);
+                }
             }
         } catch (e) {
             logMessage({ type:'error', message: e.message });
@@ -83,7 +90,6 @@ export default function Authenticate({ fileHandle, setFileHandle }) {
                             <Row>
                                 <Col sm={5} md={5} lg={5} xl={5} className="m-auto">
                                     <Button
-                                        onClick={() => null}
                                         variant="dark"
                                         className="w-100"
                                         onClick={() => chooseFileClick()}
@@ -141,7 +147,6 @@ export default function Authenticate({ fileHandle, setFileHandle }) {
                             <Row>
                                 <Col className="text-center">
                                     <Button
-                                        onClick={ () => null }
                                         variant="dark"
                                         className="m-auto"
                                         onClick={ () => verifyPassphraseClick() }

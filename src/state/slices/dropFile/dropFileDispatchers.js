@@ -1,8 +1,22 @@
 import store from "../../store";
 import {
-    SET_PRIVATE_KEY_SYSTEM, SET_PUBLIC_KEY_SYSTEM, SET_PRIVATE_KEY_USER, SET_PUBLIC_KEY_USER,
-    SET_DROPFILE, ADD_PASSWORD, ADD_CATEGORY, DELETE_CATEGORY, DELETE_PASSWORD,UPDATE_SETTING,
+    SET_DROPFILE, ADD_PASSWORD, ADD_CATEGORY, DELETE_CATEGORY, DELETE_PASSWORD, UPDATE_SETTING, DELETE_NOTE,
 } from "./dropFileActions";
+import {ADD_NOTE} from "../system/systemActions";
+
+export const addNote = noteObj => {
+    store.dispatch({
+        type: ADD_NOTE,
+        payload: noteObj
+    });
+}
+
+export const deleteNote = noteObj => {
+    store.dispatch({
+        type: DELETE_NOTE,
+        payload: noteObj
+    });
+}
 
 export const addPassword = passwordObj => {
     store.dispatch({
@@ -45,21 +59,7 @@ export const setDropfile = dropFile => {
         payload: dropFile
     });
 }
-
-const setPrivateKeySystem = key => {
-    store.dispatch({
-        type: SET_PRIVATE_KEY_SYSTEM,
-        payload: key
-    })
-}
-
-const setPublicKeySystem = key => {
-    store.dispatch({
-        type: SET_PUBLIC_KEY_SYSTEM,
-        payload: key
-    })
-}
-
+/*
 const setPrivateKeyUser = key => {
     store.dispatch({
         type: SET_PRIVATE_KEY_USER,
@@ -72,5 +72,5 @@ const setPublicKeyUser = key => {
         type: SET_PUBLIC_KEY_USER,
         payload: key
     })
-}
+}*/
 

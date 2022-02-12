@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { } from 'react';
 import { useSelector } from "react-redux";
 import { Container, Alert } from 'react-bootstrap';
 import Authenticate from './Authenticate';
@@ -7,6 +7,7 @@ import Home from "./Home";
 import Passwords from './../passwords/Passwords';
 import Settings from './Settings';
 import ChangePassphrase from './ChangePassphrase';
+import Notes from "./Notes";
 import { dismissLogMessage } from './../state/slices/system/systemDispatchers';
 
 export default function Content({ fileHandle, setFileHandle }) {
@@ -17,7 +18,8 @@ export default function Content({ fileHandle, setFileHandle }) {
         'Home' : <Home setFileHandle={setFileHandle} fileHandle={fileHandle} />,
         'Passwords' : <Passwords setFileHandle={setFileHandle} fileHandle={fileHandle} />,
         'Settings' : <Settings setFileHandle={setFileHandle} fileHandle={fileHandle} />,
-        'ChangePassphrase' : <ChangePassphrase setFileHandle={setFileHandle} fileHandle={fileHandle} />
+        'ChangePassphrase' : <ChangePassphrase setFileHandle={setFileHandle} fileHandle={fileHandle} />,
+        'Notes' : <Notes setFileHandle={setFileHandle} fileHandle={fileHandle} />,
     }
 
     const logTypeMap = {

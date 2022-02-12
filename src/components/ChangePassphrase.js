@@ -2,20 +2,24 @@ import React, { useState } from "react";
 import { Container, Row, Col, Button, Form } from "react-bootstrap";
 import Loading from "./Loading";
 import {triedToPaste} from "../state/slices/system/systemUtils";
-import {generateKeypair} from "../filesystem-encryption/openPgpWrapper";
-import {encryptString, getSystemPublicKey} from "../filesystem-encryption/openPgpUtils";
-import {initialStateDropfileData} from "../state/initialStateDropfileData";
-import {createNewFileHandle, writeFile} from "../filesystem-encryption/fsApiWrapper";
-import {setCurrentPage} from "../state/slices/system/systemDispatchers";
+import { useSelector } from "react-redux";
+import {logMessage} from "../state/slices/system/systemDispatchers";
+import {resetPrivateKeyPassphrase} from "../filesystem-encryption/openPgpWrapper";
 
 export default function ChangePassphrase({fileHandle, setFileHandle}) {
+    const state = useSelector(state => state);
     const [oldPassphrase, setOldPassphrase] = useState('');
     const [newPassphrase, setNewPassphrase] = useState('');
     const [confirmNewPassphrase, setConfirmNewPassphrase] = useState('');
     const [pin, setPin] = useState('');
 
     const handleClick = async() => {
-
+        if(pin !== parseInt(state.dropFile.data.settings.pin)) {
+            logMessage({type:'error', message: 'Incorrect pin or passphrase entered.'})
+            return false;
+        } else {
+            await resetPrivateKeyPassphrase(state.dropFile.keys.privateKeyArmored, oldPassphrase, newPassphrase);
+        }
     }
 
     const determineDisabled = _ => {

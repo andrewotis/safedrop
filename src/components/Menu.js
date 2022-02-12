@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar, Nav, NavDropdown, Container } from 'react-bootstrap';
+import { Navbar, Nav, NavItem, NavDropdown, Container } from 'react-bootstrap';
 import { useSelector } from "react-redux";
 import { Icon } from '@iconify/react';
 import { setCurrentPage } from "../state/slices/system/systemDispatchers";
@@ -54,7 +54,12 @@ export default function Menu({ fileHandle, setFileHandle }) {
                                                 Update Reminder
                                             </NavDropdown.Item>
                                         </NavDropdown>
-                                        <Nav.Link onClick={() => setCurrentPage('Notes')} className="cursor-pointer">Notes</Nav.Link>
+                                        <NavItem
+                                            onClick={() => setCurrentPage('Notes')}
+                                            className="cursor-pointer"
+                                        >
+                                            Notes
+                                        </NavItem>
                                         <Nav.Link onClick={() => setCurrentPage('Calendar')} className="cursor-pointer">Calendar</Nav.Link>
                                         <Nav.Link onClick={() => setCurrentPage('Files')} className="cursor-pointer">Files</Nav.Link>
                                         <NavDropdown title="Keys" id="nav-dropdown-keys">

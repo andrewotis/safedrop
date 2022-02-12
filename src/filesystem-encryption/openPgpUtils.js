@@ -1,4 +1,4 @@
-    import * as wrapper from './openPgpWrapper';
+  //  import * as wrapper from './openPgpWrapper';
     import { createMessage, encrypt, readPublicKey, readPrivateKey, readArmoredMessage, decrypt } from "./openPgpWrapper";
 
     export const encryptString = async(string, publicKeyArmored) => {
@@ -22,7 +22,6 @@
 
     export const getPassphrase = async(systemPrivateKey) => {
         const encrypted = sessionStorage.getItem('passphrase');
-        throw new Error("encrypted=="+encrypted)
         const privateKey = await readPrivateKey(systemPrivateKey, process.env.REACT_APP_HOUSE_KEY_PASSPHRASE);
         const message = await readArmoredMessage(encrypted);
         const decrypted = await decrypt(message, privateKey);

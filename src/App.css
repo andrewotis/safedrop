@@ -68,6 +68,14 @@
     font-size: .7em;
 }
 
+.pr-10px {
+    padding-right: 10px;
+}
+
+.float-right {
+    float: right;
+}
+
 .color1 { color: #335681; }
 .color2 { color: #436ea3; }
 .color3 { color: #7fa2cc; }

@@ -8,6 +8,7 @@ export const initialStateDropfileData = {
     files: [],
     calendar: [],
     settings: {
+        pin: 0,
         postLoginDestination: 'Home',
         autoSaveDropFile: true,
         maskUsername: true,
@@ -20,6 +21,7 @@ export const initialStateDropfileData = {
             noRepeatingChars: false,
             characterMap: passwordGeneratorCharacters
         }
-    }
+    },
+    graveyard: [],
 };
 

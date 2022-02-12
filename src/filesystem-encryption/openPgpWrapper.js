@@ -1,6 +1,6 @@
 import * as openpgp from 'openpgp';
 import {logMessage} from "../state/slices/system/systemDispatchers";
-import {decryptKey} from "openpgp";
+//import {decryptKey} from "openpgp";
 
 export const generateKeypair = async (passphrase, username = 'Safe Drop') => {
     const { privateKey, publicKey, revocationCertificate } = await openpgp.generateKey({
@@ -65,7 +65,7 @@ export const encrypt = async(messageObject, publicKeyObject) => {
 }
 
 export const decrypt = async (message, privateKey) => {
-    const { data: decrypted, signatures } = await openpgp.decrypt({
+    const { data: decrypted } = await openpgp.decrypt({
         message,
         decryptionKeys: privateKey
     });
