@@ -1,13 +1,15 @@
 SafeDrop
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/4cd8e7f6-2787-4a27-a540-f6d7a2f05351/deploy-status)](https://app.netlify.com/sites/safedrop/deploys)
+
 A 100% locally stored password manager, secure note storage, private messaging tool that uses PGP encryption.
 
-Main depenencies of the web app:
--React for tailoring the UI
--react-bootstrap for UI experience
--Redux for state managemnet (I started prop drilling this and it just wasn't working out)
--HTML Filesystem API for data storage
--OpenPGPjs for encryption and decryption
+This app uses
+-React
+-react-bootstrap
+-Redux
+-HTML Filesystem API
+-OpenPGPjs
 
 Basic Core Principals so far:
 - nothing should be transmitted over the wire. No relational databases, all local filesystem storage.
