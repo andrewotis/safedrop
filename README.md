@@ -7,11 +7,11 @@ A 100% locally stored password manager, secure note storage, private messaging t
 This app uses
 -React
 -react-bootstrap
--Redux
+-redux
 -HTML Filesystem API
 -OpenPGPjs
 
-Basic Core Principals so far:
+Some considerations:
 - nothing should be transmitted over the wire. No relational databases, all local filesystem storage.
 - upon successful installation, this app should be able to be run 100% offline and stored to secured local files.
 - the app should make it very easy for any user of any skill level to use top of the line security/encryption tools
