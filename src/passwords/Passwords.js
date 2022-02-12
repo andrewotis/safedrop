@@ -1,11 +1,11 @@
 import React, {useState } from "react";
-import { Container, Modal, Table, Row, Col, Button, Form, Dropdown, InputGroup,} from "react-bootstrap";
+import { Container, Table, Row, Col, Button, Form,} from "react-bootstrap";
 import { Icon } from '@iconify/react';
 import AddPasswordModal from './AddPasswordModal';
 import { useSelector } from "react-redux";
 import Loading from "../components/Loading";
-import { innerStars, stars, } from "./passwordUtils";
-import { addCategory, deleteCategory, deletePassword } from "../state/slices/dropFile/dropFileDispatchers";
+import { stars, } from "./passwordUtils";
+import { deletePassword } from "../state/slices/dropFile/dropFileDispatchers";
 import { saveDropfile } from "../state/slices/dropFile/dropFileUtils";
 import { copyToClipBoard } from "../state/slices/system/systemUtils";
 import Username from "./Username";
@@ -14,7 +14,7 @@ import CategoriesDropdown from "./CategoriesDropdown";
 
 export default function Passwords({ fileHandle, setFileHandle }) {
     const state = useSelector(state => state);
-    const settings = state.dropFile.data.settings;
+    // const settings = state.dropFile.data.settings;
     const passwords = state.dropFile.data.passwords;
     const [showModal, setShowModal] = useState(false);
     const [usernameHover, setUsernameHover] = useState(null);
@@ -62,7 +62,7 @@ export default function Passwords({ fileHandle, setFileHandle }) {
             </Row>
             <Row>
                 <Col>
-                    <Table size="sm" striped bordered hover striped variant="dark" className="m-auto fs-6">
+                    <Table size="sm" striped bordered hover variant="dark" className="m-auto fs-6">
                         <thead>
                             <tr>
                                 <th style={{ width: '25%' }}>item</th>

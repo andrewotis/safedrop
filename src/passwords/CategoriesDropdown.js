@@ -8,8 +8,8 @@ export default function CategoriesDropdown({fileHandle, setFileHandle}) {
     const [newCategory, setNewCategory] = useState('');
     const [addCategoryActive, setAddCategoryActive] = useState(false);
     const state = useSelector(state => state);
-    const settings = state.dropFile.data.settings;
-    const passwords = state.dropFile.data.passwords;
+    //const settings = state.dropFile.data.settings;
+    //const passwords = state.dropFile.data.passwords;
 
     const handleCategoryAdd = async() => {
         if(newCategory !== '') {
