@@ -17,7 +17,7 @@ export const initialStateDropfileData = {
         clipboardEraseTimer: 10,
         passwordCategories: [],
         passwordGenerator: {
-            preferredLength: 12,
+            preferredLength: 16,
             noRepeatingChars: false,
             characterMap: passwordGeneratorCharacters
         }

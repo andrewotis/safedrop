@@ -54,13 +54,9 @@ export default function Menu({ fileHandle, setFileHandle }) {
                                                 Update Reminder
                                             </NavDropdown.Item>
                                         </NavDropdown>
-                                        <NavItem
-                                            onClick={() => setCurrentPage('Notes')}
-                                            className="cursor-pointer"
-                                        >
-                                            Notes
-                                        </NavItem>
                                         <Nav.Link onClick={() => setCurrentPage('Calendar')} className="cursor-pointer">Calendar</Nav.Link>
+                                        <Nav.Link onClick={() => setCurrentPage('Lists')} className="cursor-pointer">Lists</Nav.Link>
+                                        <Nav.Link onClick={() => setCurrentPage('Notes')} className="cursor-pointer">Notes</Nav.Link>
                                         <Nav.Link onClick={() => setCurrentPage('Files')} className="cursor-pointer">Files</Nav.Link>
                                         <NavDropdown title="Keys" id="nav-dropdown-keys">
                                             <NavDropdown.Item onClick={() => setCurrentPage('GenerateKeys')} href="#">Generate</NavDropdown.Item>

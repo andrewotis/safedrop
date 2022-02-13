@@ -21,12 +21,15 @@ export const readArmoredMessage = async (armoredString) => {
 
 export const resetPrivateKeyPassphrase = async (privateKeyArmored, oldPassphrase, newPassphrase) => {
     const privateKey = await readPrivateKey(privateKeyArmored, oldPassphrase);
+    console.log('privateKey', privateKey);
+
     let encryptedWithNewPassphrase;
     try {
         encryptedWithNewPassphrase = await openpgp.encryptKey({
             privateKey: privateKey,
             passphrase: newPassphrase
         })
+        console.log('encryptedWithNewPassphrase', encryptedWithNewPassphrase);
     } catch(e) {
         logMessage({type:'error',message: e.message});
     }

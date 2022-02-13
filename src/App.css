@@ -76,6 +76,18 @@
     float: right;
 }
 
+.m-5px {
+    margin: 5px;
+}
+
+.full-width-child-btn > button {
+    width: 100% !important;
+}
+.v-dark {
+    background-color: #131313 !important;
+    color: #fff !important;
+}
+
 .color1 { color: #335681; }
 .color2 { color: #436ea3; }
 .color3 { color: #7fa2cc; }
@@ -85,6 +97,9 @@
 .file-input {
     background-color: #a7a8a8 !important;
     border: 1px solid #ced4da !important;
+}
+.guides {
+    border: 1px dashed red;
 }
 
 .add-password-category-parent > button  {

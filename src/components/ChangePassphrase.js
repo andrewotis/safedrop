@@ -37,6 +37,19 @@ export default function ChangePassphrase({fileHandle, setFileHandle}) {
         }
     }
 
+    const determineButtonText = _ => {
+        if(newPassphrase !== confirmNewPassphrase)
+            return "Passphrase and Confirm Passphrase do not match";
+        else
+            return "Verify identity and update passphrase"
+    }
+
+    const determineButtonActive = _ => {
+
+    }
+
+    console.log('determineDisabled', determineDisabled());
+
     return (
       <Container>
           <Loading />
@@ -80,7 +93,7 @@ export default function ChangePassphrase({fileHandle, setFileHandle}) {
                           onPaste={ () => triedToPaste() }
                       />
                   </Form.Group>
-                  <Form.Group className="mb-3" >
+                  <Form.Group className="mb-5" >
                       <Form.Label>Confirm New Passphrase</Form.Label>
                       <Form.Control
                           size="sm"
@@ -94,10 +107,11 @@ export default function ChangePassphrase({fileHandle, setFileHandle}) {
                   <Button
                       variant="light"
                       size="sm"
-                      disabled={determineDisabled}
+                      disabled={determineDisabled()}
                       onClick={() => handleClick()}
                   >
-                      Update
+                      {(oldPassphrase === '' || newPassphrase === '' || pin === '' || confirmNewPassphrase === '') && "Please enter all values"}
+
                   </Button>
               </Col>
           </Row>

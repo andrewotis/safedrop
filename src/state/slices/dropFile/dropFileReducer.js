@@ -28,10 +28,7 @@ export default function dropFileReducer(state = initialState, action) {
             newState.data.passwords = [...newState.data.passwords, action.payload];
             return newState;
         case DELETE_NOTE:
-            newState.data.notes = newState.data.notes.filter(note => {
-                return note.title !== action.payload.title &&
-                    note.content !== action.payload.content;
-            })
+            newState.data.notes = newState.data.notes.filter(note => note.id !== action.payload.id);
             return newState;
         case DELETE_PASSWORD:
             newState.data.passwords = newState.data.passwords.filter(password => {

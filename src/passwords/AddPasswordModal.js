@@ -7,6 +7,7 @@ import { generateRandomPassword } from "./passwordUtils";
 import { logMessage } from "../state/slices/system/systemDispatchers";
 import { addPassword } from "../state/slices/dropFile/dropFileDispatchers";
 import {saveDropfile} from "../state/slices/dropFile/dropFileUtils";
+import { v4 as uuidv4 } from 'uuid';
 
 export default function AddPasswordModal({ show, setShow, fileHandle, setFileHandle }) {
     const state = useSelector(state => state);
@@ -63,6 +64,7 @@ export default function AddPasswordModal({ show, setShow, fileHandle, setFileHan
         }
 
         const passwordObject = {
+            id: uuidv4(),
             title: title,
             username: username,
             password: password,
@@ -73,11 +75,6 @@ export default function AddPasswordModal({ show, setShow, fileHandle, setFileHan
         saveDropfile(fileHandle);
         clearInputs();
         setShow(false);
-    }
-
-    const handleAddCategoryButton = _ => {
-        setMetaKey('Category');
-        setMetaValue('');
     }
 
     return (
@@ -224,16 +221,6 @@ export default function AddPasswordModal({ show, setShow, fileHandle, setFileHan
                                 className="w-100"
                             >
                                 Add Meta
-                            </Button>
-                        </Col>
-                        <Col xs="4" md="4" lg="4" xl="4">
-                            <Button
-                                variant="outline-light"
-                                size="sm"
-                                onClick={() => handleAddCategoryButton()}
-                                className="w-100"
-                            >
-                                Add Category
                             </Button>
                         </Col>
                         <Col className="fs-8">
