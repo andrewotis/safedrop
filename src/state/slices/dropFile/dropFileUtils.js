@@ -19,3 +19,14 @@ export const saveDropfile = async(fh, source = null) => {
         await writeFile(fh, JSON.stringify({data: btoa(encrypted)}));
     }
 }
+
+export const getFormattedDate = _ => {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = ("0" + (parseInt(now.getMonth())+1).toString()).substr(-2);
+    const hour = now.getHours();
+    const minutes = ("0" + (parseInt(now.getMinutes())+1).toString()).substr(-2);
+    const seconds =  ("0" + (parseInt(now.getSeconds())+1).toString()).substr(-2);
+    const dateStr = year + "-" + month + "-" + now.getDate() + " " + hour + ":" + minutes + ":" + seconds;
+    return dateStr;
+}

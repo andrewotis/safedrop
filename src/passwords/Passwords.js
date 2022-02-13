@@ -65,10 +65,11 @@ export default function Passwords({ fileHandle, setFileHandle }) {
                     <Table size="sm" striped bordered hover variant="dark" className="m-auto fs-6">
                         <thead>
                             <tr>
-                                <th style={{ width: '25%' }}>item</th>
-                                <th style={{ width: '25%' }}>username</th>
-                                <th style={{ width: '25%' }}>password</th>
-                                <th style={{ width: '25%' }} className="text-right">actions</th>
+                                <th style={{ width: '20%' }}>item</th>
+                                <th style={{ width: '20%' }}>username</th>
+                                <th style={{ width: '20%' }}>password</th>
+                                <th style={{ width: '20%' }}>created</th>
+                                <th style={{ width: '20%' }} className="text-right">actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -126,8 +127,10 @@ export default function Passwords({ fileHandle, setFileHandle }) {
                                                 style={{marginLeft: '5px'}}
                                             />
                                         </td>
+                                        <td>
+                                            { password.created }
+                                        </td>
                                         <td className="text-right">
-                                            
                                             <Icon
                                                 icon="bx:bxs-edit"
                                                 color="white"

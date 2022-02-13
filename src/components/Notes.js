@@ -4,8 +4,7 @@ import { useSelector } from "react-redux";
 import Loading from "./Loading";
 import {addNote, deleteNote} from "../state/slices/dropFile/dropFileDispatchers";
 import { v4 as uuidv4 } from 'uuid';
-import {saveDropfile} from "../state/slices/dropFile/dropFileUtils";
-
+import {saveDropfile,getFormattedDate} from "../state/slices/dropFile/dropFileUtils";
 export default function Notes({ fileHandle }) {
     const state = useSelector(state => state);
     const [filter, setFilter] = useState('');
@@ -13,11 +12,14 @@ export default function Notes({ fileHandle }) {
         id: '',
         title: '',
         content: '',
+        created: null
     });
-    const [fileDropdown, setFileDropDown] = useState('');
 
     useEffect(() => {
-        setNote({...note, id: uuidv4()})
+        setNote({...note,
+            id: uuidv4(),
+            created: getFormattedDate()
+        })
     },[]);
 
     const handleSave = _ => {
@@ -25,14 +27,18 @@ export default function Notes({ fileHandle }) {
     }
 
     const handleAddNewNote = _ => {
-        setNote({
+        console.log("handleAddNewNote")
+        const newNote = {
             id: uuidv4(),
             content: '',
-            title: ''
-        });
+            title: '',
+            created: getFormattedDate()
+        };
+        console.log(newNote)
+        setNote(newNote);
     }
 
-    const handleNoteClick = noteObj => setNote({ id: noteObj.id, title: noteObj.title, content: noteObj.content });
+    const handleNoteClick = noteObj => setNote({ id: noteObj.id, title: noteObj.title, content: noteObj.content, created: noteObj.created });
     const handleDeleteClick = _ => {
         deleteNote(note);
         saveDropfile(fileHandle);
@@ -46,8 +52,8 @@ export default function Notes({ fileHandle }) {
                     Notes
                 </Col>
             </Row>
-            <Row className="w-100 mb-4 guides">
-                <Col xs={3} sm={3} md={3} xl={3} className="guides">
+            <Row className="w-100 mb-4">
+                <Col xs={3} sm={3} md={3} xl={3} className="">
                     <InputGroup className="mb-3" >
                         <FormControl
                             value={filter}
@@ -75,11 +81,11 @@ export default function Notes({ fileHandle }) {
                 </Col>
                 <Col className="w-100 fs-6 m-auto">
                     <Row>
-                        <Col xs={3} sm={3} md={3} xl={3} >
+                        <Col xs={2} sm={2} md={2} xl={2} >
                             <DropdownButton
                                 variant="outline-light"
                                 title="File"
-                                className="full-width-child-btn"
+                                className="full-width-child-btn rounded-corners"
                                 id="input-group-dropdown-1"
                             >
                                 <Dropdown.Item
@@ -100,11 +106,21 @@ export default function Notes({ fileHandle }) {
                                 </Dropdown.Item>
                             </DropdownButton>
                         </Col>
-                        <Col>
+                        <Col xs={5} sm={5} md={5} xl={5} >
                             <InputGroup className="mb-3" >
                                 <InputGroup.Text id="basic-addon2" className="v-dark">id:</InputGroup.Text>
                                 <FormControl
-                                    value={note.id || 'undefined'}
+                                    value={note.id}
+                                    disabled
+                                    className="v-dark"
+                                />
+                            </InputGroup>
+                        </Col>
+                        <Col>
+                            <InputGroup className="mb-3" >
+                                <InputGroup.Text id="basic-addon2" className="v-dark">created:</InputGroup.Text>
+                                <FormControl
+                                    value={note.hasOwnProperty('created') && note.created !== undefined && note.created !== '' ? note.created : 'undefined'}
                                     disabled
                                     className="v-dark"
                                 />

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Tooltip, OverlayTrigger, InputGroup, FormControl, Row, Col, Button, Modal, DropdownButton, Dropdown } from "react-bootstrap";
 import { Icon } from '@iconify/react';
 import { useSelector } from "react-redux";
@@ -6,10 +6,10 @@ import Loading from '../components/Loading';
 import { generateRandomPassword } from "./passwordUtils";
 import { logMessage } from "../state/slices/system/systemDispatchers";
 import { addPassword } from "../state/slices/dropFile/dropFileDispatchers";
-import {saveDropfile} from "../state/slices/dropFile/dropFileUtils";
+import {getFormattedDate, saveDropfile} from "../state/slices/dropFile/dropFileUtils";
 import { v4 as uuidv4 } from 'uuid';
 
-export default function AddPasswordModal({ show, setShow, fileHandle, setFileHandle }) {
+export default function AddPasswordModal({ show, setShow, fileHandle }) {
     const state = useSelector(state => state);
     const [title, setTitle] = useState('');
     const [username, setUsername] = useState('');
@@ -20,6 +20,11 @@ export default function AddPasswordModal({ show, setShow, fileHandle, setFileHan
     const [metaKey, setMetaKey] = useState('');
     const [metaValue, setMetaValue] = useState('');
     const [passwordInputType, setPasswordInputType] = useState('password');
+    const [created, setCreated] = useState('')
+
+    useEffect(() => {
+        setCreated(getFormattedDate())
+    },[]);
 
     const clearInputs = _ => {
         setTitle('');
@@ -29,6 +34,7 @@ export default function AddPasswordModal({ show, setShow, fileHandle, setFileHan
         setMetas([]);
         setMetaKey('');
         setMetaValue('');
+        setCreated('');
     }
     
     const handleAddMetaButton = _ => {
@@ -68,7 +74,8 @@ export default function AddPasswordModal({ show, setShow, fileHandle, setFileHan
             title: title,
             username: username,
             password: password,
-            metas: localMetas
+            metas: localMetas,
+            created: created
         };
 
         await addPassword(passwordObject);
