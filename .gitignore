@@ -8,3 +8,6 @@ src/houseKeys.js
 .env
 systemkeys.json
 systemkeys
+ignore/*
+ignore
+ignore/
