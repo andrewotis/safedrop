@@ -49,7 +49,7 @@ export default function AddPasswordModal({ show, setShow, fileHandle }) {
     }
 
     const handleGeneratePassword = _ => {
-        const pass = generateRandomPassword(12);
+        const pass = generateRandomPassword(state.dropFile);
         setPassword(pass);
         setConfirm(pass);
         setPasswordInputType('text');

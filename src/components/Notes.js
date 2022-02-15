@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Container, Row, Col, Form, Button, Dropdown, DropdownButton, InputGroup, FormControl} from 'react-bootstrap';
+import {Container, Row, Col, Form, Dropdown, DropdownButton, InputGroup, FormControl} from 'react-bootstrap';
 import { useSelector } from "react-redux";
 import Loading from "./Loading";
 import {addNote, deleteNote} from "../state/slices/dropFile/dropFileDispatchers";
@@ -58,7 +58,7 @@ export default function Notes({ fileHandle }) {
                         <FormControl
                             value={filter}
                             className="v-dark"
-                            placeholder="Filter files..."
+                            placeholder="Filter notes..."
                             onChange={e => setFilter(e.target.value)}
                         />
                     </InputGroup>
@@ -73,13 +73,40 @@ export default function Notes({ fileHandle }) {
                                         className="text-right pr-10px fw-lighter cursor-pointer m-5px border-bottom"
                                         onClick={() => handleNoteClick(note)}
                                     >
-                                        { note.title }
+                                        { note.title === '' ? '???<no-description-set>???' : note.title }
                                     </div>
                                 );
                             })
                     }
                 </Col>
                 <Col className="w-100 fs-6 m-auto">
+                    <div className="editor">
+                        stuff
+                    </div>
+                    <Container className="g-0">
+                        <Row>
+                            <Col>
+                                <Form.Group className="mb-3">
+                                    <Form.Label>ID</Form.Label>
+                                    <Form.Control className="dark-form" disabled size="sm" type="text" value={note.id}/>
+                                </Form.Group>
+                            </Col>
+                            <Col>
+                                <Form.Group className="mb-3">
+                                    <Form.Label>Created At</Form.Label>
+                                    <Form.Control className="dark-form" disabled size="sm" type="text" value={note.created_at}/>
+                                </Form.Group>
+                            </Col>
+                            <Col>
+                                <Form.Group className="mb-3">
+                                    <Form.Label>Updated At</Form.Label>
+                                    <Form.Control className="dark-form " disabled size="sm" type="text" value={note.updated_at} />
+                                </Form.Group>
+                            </Col>
+                        </Row>
+                    </Container>
+
+
                     <Row>
                         <Col xs={2} sm={2} md={2} xl={2} >
                             <DropdownButton
@@ -106,16 +133,7 @@ export default function Notes({ fileHandle }) {
                                 </Dropdown.Item>
                             </DropdownButton>
                         </Col>
-                        <Col xs={5} sm={5} md={5} xl={5} >
-                            <InputGroup className="mb-3" >
-                                <InputGroup.Text id="basic-addon2" className="v-dark">id:</InputGroup.Text>
-                                <FormControl
-                                    value={note.id}
-                                    disabled
-                                    className="v-dark"
-                                />
-                            </InputGroup>
-                        </Col>
+
                         <Col>
                             <InputGroup className="mb-3" >
                                 <InputGroup.Text id="basic-addon2" className="v-dark">created:</InputGroup.Text>
