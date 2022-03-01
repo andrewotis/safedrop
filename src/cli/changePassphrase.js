@@ -1,12 +1,15 @@
 const openpgp = require('openpgp');
 require('dotenv').config()
 const fs = require('fs');
-
-
+const {generateRandomPassword} = require("../passwords/passwordUtils");
 
 const changePassphrase = async() => {
-    console.log('running changePassphrase');
-    console.log('config values'), {
+    // generate random password
+    const password = generateRandomPassword(16)
+    throw new Error(password)
+    // generate keys
+
+    // store keys
     const privateKey = process.env.REACT_APP_PRIVATE_KEY;
     const passphrase = proess.env.REACT_APP
 }
@@ -19,3 +22,8 @@ const changePassphrase = async() => {
 // decrypt the private key
 }
 
+
+changePassphrase();
+    for(let x=1;x<=5;x++) {
+
+    }

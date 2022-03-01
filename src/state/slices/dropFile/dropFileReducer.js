@@ -1,11 +1,11 @@
-import {initialStateDropfileData} from "../../initialStateDropfileData";
+import {initialStateDropfileData} from "../../initialStateDropfileData.js";
 import {
     SET_PRIVATE_KEY_USER,
     SET_PUBLIC_KEY_USER,
     SET_DROPFILE,
     ADD_PASSWORD,
     ADD_CATEGORY, DELETE_CATEGORY, DELETE_PASSWORD, UPDATE_SETTING, ADD_NOTE, DELETE_NOTE
-} from "./dropFileActions";
+} from "./dropFileActions.js";
 
 const initialState = {
     data: initialStateDropfileData,

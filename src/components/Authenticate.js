@@ -78,13 +78,13 @@ export default function Authenticate({ fileHandle, setFileHandle }) {
                         src="img/lockskull3.jpg"
                         alt=""
                         style={{
-                            height: '200px'
+                            height: '350px'
                         }}
                     />
                 </Col>
             </Row>
             <Row className="mt-4">
-                <Col sm={4} md={4} lg={4} xl={4} className="m-auto">
+                <Col sm={6} md={6} lg={6} xl={6} className="m-auto">
                     { screen === "loadOrCreateDropfile" &&
                         <Container>
                             <Row>

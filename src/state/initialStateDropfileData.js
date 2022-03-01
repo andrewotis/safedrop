@@ -1,4 +1,4 @@
-import { passwordGeneratorCharacters } from '../passwords/passwordGeneratorCharacters';
+import { passwordGeneratorCharacters } from '../passwords/passwordGeneratorCharacters.js';
 
 //state.dropFile.data.settings
 

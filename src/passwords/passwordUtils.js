@@ -1,5 +1,5 @@
-import * as systemm from './../state/slices/system/systemUtils';
-import store from './../state/store';
+import * as systemUtils from './../state/slices/system/systemUtils.js';
+import store from './../state/store.js';
 
 export const stars = num => {
     let r = '';
