@@ -1,7 +1,7 @@
-import * as systemUtils from './../state/slices/system/systemUtils.js';
-import store from './../state/store.js';
+import * as systemUtils from './../state/slices/system/systemUtils';
+import store from './../state/store';
 
-export const stars = num => {
+export const stars = (num) => {
     let r = '';
     for(let n=1;n<=num;n++) {
         r += '*';
@@ -27,7 +27,7 @@ export const generateRandomPassword = passwordLength => {
     let results = '';
     const map = store.getState().dropFile.data.settings.passwordGenerator.characterMap;
     for(let n=0;n<passwordLength;n++) {
-        results += map[systemm.getRandomNumber(map.length)].char.toString();
+        results += map[systemUtils.getRandomNumber(map.length)].char.toString();
     }
     return results;
 }

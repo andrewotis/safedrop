@@ -120,7 +120,7 @@ export default function Authenticate({ fileHandle, setFileHandle }) {
                                     {
                                         filename ?
                                             `Safe: ${filename}` :
-                                                null
+                                            null
                                     }
                                 </Col>
                             </Row>

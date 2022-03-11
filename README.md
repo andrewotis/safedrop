@@ -1,25 +1,70 @@
-SafeDrop
+# Getting Started with Create React App
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/4cd8e7f6-2787-4a27-a540-f6d7a2f05351/deploy-status)](https://app.netlify.com/sites/safedrop/deploys)
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-A 100% locally stored password manager, secure note storage, private messaging tool that uses PGP encryption.
+## Available Scripts
 
-This app uses
--React
--react-bootstrap
--redux
--HTML Filesystem API
--OpenPGPjs
+In the project directory, you can run:
 
-Some considerations:
-- nothing should be transmitted over the wire. No relational databases, all local filesystem storage.
-- upon successful installation, this app should be able to be run 100% offline and stored to secured local files.
-- the app should make it very easy for any user of any skill level to use top of the line security/encryption tools
-- the app should help users learn best practices for online privacy and security
-- the app should be highly customizable and provide a wicked UI/UX
-- should run on browser AND mobile, and provide a way to *easily* sync up the two
+### `npm start`
 
-Storage and Retrieval
-This app stores all its data in a JSON file on the users PC.
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-All sensitive data is stored in a JSON object which is JSON.stringified in Javascript and then encrypted as a text string using the user’s public key which they generated themselves. This encrypted data is then packaged with the users public and private keys and encrypted using the application’s house public key on the web server. The house private key is highly secured on the web server.
+The page will reload when you make changes.\
+You may also see any lint errors in the console.
+
+### `npm test`
+
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+
+### `npm run build`
+
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
+
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
+
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+
+### `npm run eject`
+
+**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+
+If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+
+You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+
+## Learn More
+
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+
+To learn React, check out the [React documentation](https://reactjs.org/).
+
+### Code Splitting
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+
+### Analyzing the Bundle Size
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+
+### Making a Progressive Web App
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+
+### Advanced Configuration
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+
+### Deployment
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+
+### `npm run build` fails to minify
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
